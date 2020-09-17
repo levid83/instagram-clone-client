@@ -3,6 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 
 import { UserContext } from "../App";
 import { UserAction } from "../reducers/userReducer";
+import UserSearchModal from "./UserSearchModal";
 
 const NavLinks = () => {
   const { state, dispatch } = useContext(UserContext);
@@ -24,6 +25,7 @@ const NavLinks = () => {
         >
           search
         </i>
+        <UserSearchModal />
       </li>,
       <li key="2">
         <Link to="/profile">Profile</Link>
