@@ -1,6 +1,6 @@
 export const initialState = null;
 
-export const Actions = {
+export const UserAction = {
   SET_USER: "SET_USER",
   LOGOUT: "LOGOUT",
   UPDATE_FOLLOWERS: "UPDATE_FOLLOWERS",
