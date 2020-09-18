@@ -18,4 +18,27 @@ export default class AuthService {
       console.log(err);
     }
   }
+
+  async signin({ email, password }) {
+    try {
+      let result = await fetch("/signin", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+      return result.json();
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async saveLocalUser(data) {
+    localStorage.setItem("jwt", data.token);
+    localStorage.setItem("user", JSON.stringify(data.user));
+  }
 }
