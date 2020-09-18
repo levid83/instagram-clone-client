@@ -1,16 +1,19 @@
-import React, { useContext } from "react";
+import React from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { UserContext } from "../App";
 
-import "./Navbar.css";
+import "./NavBar.css";
 import NavLinks from "./NavLinks";
 
 const NavBar = () => {
-  const { state } = useContext(UserContext);
+  const isAuthenticated = useSelector((state) => !!state);
   return (
     <nav>
       <div className="nav-wrapper white">
-        <Link to={state ? "/" : "/signin"} className="brand-logo left">
+        <Link
+          to={isAuthenticated ? "/" : "/signin"}
+          className="brand-logo left"
+        >
           Instagram
         </Link>
         <ul id="nav-mobile" className="right">

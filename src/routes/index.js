@@ -1,6 +1,8 @@
-import React, { useEffect, useContext } from "react";
-import { Route, Switch, useHistory } from "react-router-dom";
-import { UserContext } from "../App";
+import React from "react";
+import { useSelector } from "react-redux";
+import { Route, Switch } from "react-router-dom";
+
+import GuardedRoute from "./GuardedRoute";
 
 import CreatePost from "../components/pages/CreatePost";
 import Home from "../components/pages/Home";
@@ -11,20 +13,10 @@ import SignIn from "../components/pages/SignIn";
 import SignUp from "../components/pages/SignUp";
 import SubscribedUserPosts from "../components/pages/SubscribedUserPosts";
 import UserProfile from "../components/pages/UserProfile";
-import { UserAction } from "../reducers/userReducer";
 
 const Routing = () => {
-  const history = useHistory();
-  const { dispatch } = useContext(UserContext);
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (user) {
-      dispatch({ type: UserAction.SET_USER, payload: user });
-    } else {
-      if (!history.location.pathname.startsWith("/reset"))
-        history.push("/signin");
-    }
-  }, [dispatch, history]);
+  const isAuthenticated = useSelector((state) => !!state);
+
   return (
     <Switch>
       <Route exact path="/" component={Home} />
@@ -33,13 +25,30 @@ const Routing = () => {
 
       <Route path="/signup" component={SignUp} />
 
-      <Route exact path="/profile" component={Profile} />
+      <GuardedRoute
+        exact
+        path="/profile"
+        component={Profile}
+        auth={isAuthenticated}
+      />
 
-      <Route path="/create-post" component={CreatePost} />
+      <GuardedRoute
+        path="/create-post"
+        component={CreatePost}
+        auth={isAuthenticated}
+      />
 
-      <Route path="/user-profile/:userid" component={UserProfile} />
+      <GuardedRoute
+        path="/user-profile/:userid"
+        component={UserProfile}
+        auth={isAuthenticated}
+      />
 
-      <Route path="/subscribed-user-posts" component={SubscribedUserPosts} />
+      <GuardedRoute
+        path="/subscribed-user-posts"
+        component={SubscribedUserPosts}
+        auth={isAuthenticated}
+      />
 
       <Route exact path="/reset-password" component={ResetPassword} />
 

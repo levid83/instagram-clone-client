@@ -1,10 +1,10 @@
-import React, { useContext, useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { UserContext } from "../App";
 import M from "materialize-css";
 
 const UserSearchModal = () => {
-  const { state } = useContext(UserContext);
+  const user = useSelector((state) => state);
 
   const searchModal = useRef(null);
   const [search, setSearch] = useState("");
@@ -42,9 +42,7 @@ const UserSearchModal = () => {
           {userDetails.map((item) => {
             return (
               <Link
-                to={
-                  item._id !== state._id ? "/profile/" + item._id : "/profile"
-                }
+                to={item.id !== user.id ? "/profile/" + item.id : "/profile"}
                 onClick={() => {
                   M.Modal.getInstance(searchModal.current).close();
                   setSearch("");

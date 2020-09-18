@@ -1,13 +1,13 @@
-import React, { useContext } from "react";
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 
-import { UserContext } from "../App";
-import { UserAction } from "../reducers/userReducer";
+import { UserAction } from "../redux/userReducer";
 import UserSearchModal from "./UserSearchModal";
 
 const NavLinks = () => {
-  const { state, dispatch } = useContext(UserContext);
-
+  const dispatch = useDispatch();
+  const isAuthenticated = useSelector((state) => !!state);
   const history = useHistory();
 
   const onLogout = () => {
@@ -15,7 +15,7 @@ const NavLinks = () => {
     dispatch({ type: UserAction.LOGOUT });
     history.push("/signin");
   };
-  if (state) {
+  if (isAuthenticated) {
     return [
       <li key="1">
         <i

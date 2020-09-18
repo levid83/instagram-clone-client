@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import { Provider, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 
 import { UserAction } from "./redux/userReducer";
-import store from "./redux/store";
+
 import Routing from "./routes";
 
 import "./App.css";
@@ -20,12 +20,10 @@ function App() {
     }
   });
   return (
-    <Provider store={store}>
-      <BrowserRouter>
-        <NavBar />
-        <Routing />
-      </BrowserRouter>
-    </Provider>
+    <BrowserRouter>
+      <NavBar />
+      <Routing />
+    </BrowserRouter>
   );
 }
 
