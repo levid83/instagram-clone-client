@@ -13,11 +13,12 @@ const GuardedRoute = ({ component: Component, auth, ...rest }) => (
 );
 
 GuardedRoute.propTypes = {
-  component: PropTypes.element.isRequired,
+  component: PropTypes.oneOfType([PropTypes.func, PropTypes.element])
+    .isRequired,
   auth: PropTypes.bool.isRequired,
-  rest: PropTypes.any,
   path: PropTypes.string,
   exact: PropTypes.bool,
+  rest: PropTypes.any,
 };
 
 export default GuardedRoute;
