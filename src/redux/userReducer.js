@@ -6,7 +6,7 @@ export const UserAction = {
   UPDATE_FOLLOWERS: "UPDATE_FOLLOWERS",
   UPDATE_PICTURE: "UPDATE_PICTURE",
 };
-export const reducer = (state, action) => {
+const reducer = (state, action) => {
   if (action.type === "USER") {
     return action.payload;
   }
@@ -28,3 +28,4 @@ export const reducer = (state, action) => {
   }
   return state;
 };
+export default reducer;

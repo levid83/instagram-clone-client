@@ -1,23 +1,31 @@
-import React, { createContext, useReducer } from "react";
+import React, { useEffect } from "react";
+import { Provider, useDispatch } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
-import { reducer, initialState } from "./reducers/userReducer";
+
+import { UserAction } from "./redux/userReducer";
+import store from "./redux/store";
 import Routing from "./routes";
 
 import "./App.css";
 
-import NavBar from "./components/Navbar";
-
-export const UserContext = createContext();
+import NavBar from "./components/NavBar";
 
 function App() {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user) {
+      dispatch({ type: UserAction.SET_USER, payload: user });
+    }
+  });
   return (
-    <UserContext.Provider value={{ state, dispatch }}>
+    <Provider store={store}>
       <BrowserRouter>
         <NavBar />
         <Routing />
       </BrowserRouter>
-    </UserContext.Provider>
+    </Provider>
   );
 }
 
