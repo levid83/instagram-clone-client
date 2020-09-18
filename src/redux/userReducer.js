@@ -7,20 +7,20 @@ export const UserAction = {
   UPDATE_PICTURE: "UPDATE_PICTURE",
 };
 const reducer = (state, action) => {
-  if (action.type === "USER") {
+  if (action.type === UserAction.SET_USER) {
     return action.payload;
   }
-  if (action.type === "LOGOUT") {
+  if (action.type === UserAction.LOGOUT) {
     return null;
   }
-  if (action.type === "UPDATE") {
+  if (action.type === UserAction.UPDATE_FOLLOWERS) {
     return {
       ...state,
       followers: action.payload.followers,
       following: action.payload.following,
     };
   }
-  if (action.type === "UPDATE_PICTURE") {
+  if (action.type === UserAction.UPDATE_PICTURE) {
     return {
       ...state,
       picture: action.payload,
