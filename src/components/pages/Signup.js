@@ -54,7 +54,12 @@ const SignUp = () => {
   };
   return (
     <div className="mycard">
-      <form onSubmit={(e) => e.preventDefault()}>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+        }}
+      >
         <div className="card auth-card input-field">
           <h2>Instagram</h2>
           <input

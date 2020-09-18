@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 
 import { UserAction } from "./redux/userReducer";
+import AuthService from "./services/Auth.service";
 
 import Routing from "./routes";
 
@@ -14,9 +15,12 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (user) {
-      dispatch({ type: UserAction.SET_USER, payload: user });
+    const authService = new AuthService();
+    if (!authService.expiredToken()) {
+      dispatch({
+        type: UserAction.SET_USER,
+        payload: authService.getLocalUser(),
+      });
     }
   });
   return (

@@ -31,7 +31,10 @@ const SignIn = () => {
       M.toast({ html: data.error, classes: "#c62828 red darken-3" });
     } else {
       authService.saveLocalUser(data);
-      dispatch({ type: UserAction.SET_USER, payload: data.user });
+      dispatch({
+        type: UserAction.SET_USER,
+        payload: authService.getLocalUser(),
+      });
       M.toast({
         html: "signedin success",
         classes: "#43a047 green darken-1",
@@ -41,7 +44,12 @@ const SignIn = () => {
   };
   return (
     <div className="mycard">
-      <form onSubmit={(e) => e.preventDefault()}>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+        }}
+      >
         <div className="card auth-card input-field">
           <h2>Instagram</h2>
           <input
