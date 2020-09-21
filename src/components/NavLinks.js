@@ -31,7 +31,7 @@ const NavLinks = () => {
         <Link to="/profile">Profile</Link>
       </li>,
       <li key="3">
-        <Link to="/create">Create Post</Link>
+        <Link to="/create-post">Create Post</Link>
       </li>,
       <li key="4">
         <Link to="/myfollowingpost">My following Posts</Link>
