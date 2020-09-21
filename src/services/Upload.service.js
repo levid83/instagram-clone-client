@@ -1,5 +1,9 @@
+const UPLOAD_PRESET = "insta_clone";
+const CLOUD_NAME = "levid83";
+const URL = "https://api.cloudinary.com/v1_1/" + CLOUD_NAME + "/image/upload";
+
 export default class UploadService {
-  constructor(url = "", cloudName = "", uploadPreset = "") {
+  constructor(url = URL, cloudName = CLOUD_NAME, uploadPreset = UPLOAD_PRESET) {
     this.url = url;
     this.cloudName = cloudName;
     this.uploadPreset = uploadPreset;
@@ -16,7 +20,7 @@ export default class UploadService {
       });
       return result.json();
     } catch (err) {
-      console.log(err);
+      return err;
     }
   }
 }
