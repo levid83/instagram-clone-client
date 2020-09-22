@@ -29,8 +29,8 @@ const UserPost = (props) => {
         <Link
           to={
             post.postedBy._id !== user.id
-              ? "/user/" + post.postedBy._id
-              : "/user"
+              ? "/user-profile/" + post.postedBy._id
+              : "/profile"
           }
         >
           {post.postedBy.name}

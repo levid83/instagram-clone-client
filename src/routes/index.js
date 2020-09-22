@@ -39,7 +39,7 @@ const Routing = () => {
       />
 
       <GuardedRoute
-        path="/user-profile/:userid"
+        path="/user-profile/:userId"
         component={UserProfile}
         auth={isAuthenticated}
       />
