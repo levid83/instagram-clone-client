@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+import PostList from "../components/PostList";
 import { UserAction } from "../redux/userReducer";
 
 import UserService from "../services/User.service";
@@ -117,22 +118,8 @@ const UserProfile = () => {
               )}
             </div>
           </div>
-
           <div className="gallery">
-            {userProfile.posts.map((item) =>
-              item.photo ? (
-                <img
-                  key={item._id}
-                  className="item"
-                  src={item.photo}
-                  alt={item.title}
-                />
-              ) : (
-                <div key={item._id} className="item">
-                  {item.title}
-                </div>
-              )
-            )}
+            <PostList posts={userProfile.posts} />
           </div>
         </div>
       ) : (

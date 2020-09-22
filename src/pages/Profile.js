@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import PostService from "../services/Post.service";
 import UserService from "../services/User.service";
 import UploadService from "../services/Upload.service";
+import PostList from "../components/PostList";
 
 const postService = new PostService();
 const userService = new UserService();
@@ -91,20 +92,7 @@ const Profile = () => {
         </div>
       </div>
       <div className="gallery">
-        {posts.map((item) => {
-          if (item.photo) {
-            return (
-              <img
-                key={item._id}
-                className="item"
-                src={item.photo}
-                alt={item.title}
-              />
-            );
-          } else {
-            return <h5 key={item._id}>{item.title}</h5>;
-          }
-        })}
+        <PostList posts={posts} />
       </div>
     </div>
   );
