@@ -1,22 +1,13 @@
 export default class PostService {
-  async createPost({ title, body, pictureUrl }) {
+  async getAllPosts() {
     try {
-      let result = await fetch("/create-post", {
-        method: "post",
+      const result = await fetch("/all-posts", {
         headers: {
-          "Content-Type": "application/json",
           Authorization: "Bearer " + localStorage.getItem("jwt"),
         },
-        body: JSON.stringify({
-          title,
-          body,
-          picture: pictureUrl,
-        }),
       });
       return result.json();
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   }
 
   async getMyPosts() {
@@ -47,16 +38,19 @@ export default class PostService {
       console.log(err);
     }
   }
-  async likePost(id) {
+
+  async createPost({ title, body, pictureUrl }) {
     try {
-      const result = await fetch("/like-post", {
-        method: "put",
+      let result = await fetch("/create-post", {
+        method: "post",
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + localStorage.getItem("jwt"),
         },
         body: JSON.stringify({
-          postId: id,
+          title,
+          body,
+          picture: pictureUrl,
         }),
       });
       return result.json();
@@ -65,7 +59,40 @@ export default class PostService {
     }
   }
 
-  async unlikePost(id) {
+  async deletePost(postId) {
+    try {
+      const result = await fetch(`/delete-post/${postId}`, {
+        method: "delete",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("jwt"),
+        },
+      });
+      return result.json();
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async likePost(postId) {
+    try {
+      const result = await fetch("/like-post", {
+        method: "put",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("jwt"),
+        },
+        body: JSON.stringify({
+          postId: postId,
+        }),
+      });
+      return result.json();
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async unlikePost(postId) {
     try {
       const result = await fetch("/unlike-post", {
         method: "put",
@@ -74,7 +101,7 @@ export default class PostService {
           Authorization: "Bearer " + localStorage.getItem("jwt"),
         },
         body: JSON.stringify({
-          postId: id,
+          postId: postId,
         }),
       });
       return result.json();
@@ -95,21 +122,6 @@ export default class PostService {
           postId,
           text,
         }),
-      });
-      return result.json();
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
-  async deletePost(postId) {
-    try {
-      const result = await fetch(`/delete-post/${postId}`, {
-        method: "put",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + localStorage.getItem("jwt"),
-        },
       });
       return result.json();
     } catch (err) {
