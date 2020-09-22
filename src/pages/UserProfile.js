@@ -10,11 +10,11 @@ const userService = new UserService();
 
 const UserProfile = () => {
   const [userProfile, setProfile] = useState(null);
-  const state = useSelector((state) => state);
+  const user = useSelector((state) => state);
   const dispatch = useDispatch();
   const { userId } = useParams();
   const [showfollow, setShowFollow] = useState(
-    state ? !state.following.includes(userId) : true
+    user ? !user.following.includes(userId) : true
   );
 
   useEffect(() => {

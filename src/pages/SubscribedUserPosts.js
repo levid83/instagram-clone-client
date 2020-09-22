@@ -22,8 +22,8 @@ const SubscribedUserPosts = () => {
 
   return (
     <div className="home">
-      {data.map((item) => (
-        <UserPost post={item} key={item._id} onDelete={deletePost} />
+      {data.map((post) => (
+        <UserPost post={post} key={post._id} onDelete={deletePost} />
       ))}
     </div>
   );

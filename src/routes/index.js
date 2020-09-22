@@ -26,7 +26,6 @@ const Routing = () => {
       <Route path="/signup" component={SignUp} />
 
       <GuardedRoute
-        exact
         path="/profile"
         component={Profile}
         auth={isAuthenticated}
