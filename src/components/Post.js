@@ -6,7 +6,7 @@ import PostService from "../services/Post.service";
 
 const postService = new PostService();
 
-const UserPost = (props) => {
+const Post = (props) => {
   const user = useSelector((state) => state);
   const [post, setPost] = useState(props.post);
 
@@ -98,4 +98,4 @@ const UserPost = (props) => {
     </div>
   );
 };
-export default UserPost;
+export default Post;

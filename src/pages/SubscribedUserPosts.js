@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import UserPost from "../components/UserPost";
+import Post from "../components/Post";
 
 import PostService from "../services/Post.service";
 
@@ -23,7 +23,7 @@ const SubscribedUserPosts = () => {
   return (
     <div className="home">
       {data.map((post) => (
-        <UserPost post={post} key={post._id} onDelete={deletePost} />
+        <Post post={post} key={post._id} onDelete={deletePost} />
       ))}
     </div>
   );
