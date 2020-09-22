@@ -3,14 +3,14 @@ const CLOUD_NAME = "levid83";
 const URL = "https://api.cloudinary.com/v1_1/" + CLOUD_NAME + "/image/upload";
 
 export default class UploadService {
-  constructor(url = URL, cloudName = CLOUD_NAME, uploadPreset = UPLOAD_PRESET) {
+  constructor(uploadPreset = UPLOAD_PRESET, cloudName = CLOUD_NAME, url = URL) {
     this.url = url;
     this.cloudName = cloudName;
     this.uploadPreset = uploadPreset;
   }
-  async uploadPicture(image) {
+  async uploadPicture(picture) {
     const data = new FormData();
-    data.append("file", image);
+    data.append("file", picture);
     data.append("upload_preset", this.uploadPreset);
     data.append("cloud_name", this.cloudName);
     try {

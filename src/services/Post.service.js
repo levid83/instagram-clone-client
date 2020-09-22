@@ -18,4 +18,19 @@ export default class PostService {
       console.log(err);
     }
   }
+
+  async getMyPosts() {
+    try {
+      const result = await fetch("/my-posts", {
+        method: "get",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("jwt"),
+        },
+      });
+      return result.json();
+    } catch (err) {
+      console.log(err);
+    }
+    return { posts: [] };
+  }
 }
