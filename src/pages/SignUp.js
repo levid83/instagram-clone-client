@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
-import AuthService from "../../services/Auth.service";
-import UploadService from "../../services/Upload.service";
+import AuthService from "../services/Auth.service";
+import UploadService from "../services/Upload.service";
 
 import M from "materialize-css";
 

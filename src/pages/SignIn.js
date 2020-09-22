@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 
-import AuthService from "../../services/Auth.service";
-import { UserAction } from "../../redux/userReducer";
+import AuthService from "../services/Auth.service";
+import { UserAction } from "../redux/userReducer";
 
 import M from "materialize-css";
 

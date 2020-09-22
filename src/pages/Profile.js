@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import PostService from "../../services/Post.service";
-import UserService from "../../services/User.service";
-import UploadService from "../../services/Upload.service";
+import PostService from "../services/Post.service";
+import UserService from "../services/User.service";
+import UploadService from "../services/Upload.service";
 
 const postService = new PostService();
 const userService = new UserService();

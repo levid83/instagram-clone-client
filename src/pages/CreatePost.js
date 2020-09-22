@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import M from "materialize-css";
 import { useHistory } from "react-router-dom";
 
-import UploadService from "../../services/Upload.service";
-import PostService from "../../services/Post.service";
+import UploadService from "../services/Upload.service";
+import PostService from "../services/Post.service";
 
 const CreatePost = () => {
   const history = useHistory();
