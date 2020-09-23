@@ -38,17 +38,17 @@ const NavLinks = () => {
       </li>,
       <li key="5">
         <button className="btn #c62828 red darken-3" onClick={onLogout}>
-          Logout
+          Sign Out
         </button>
       </li>,
     ];
   } else {
     return [
       <li key="6">
-        <Link to="/signin">Signin</Link>
+        <Link to="/signin">Sign In</Link>
       </li>,
       <li key="7">
-        <Link to="/signup">Signup</Link>
+        <Link to="/signup">Sign Up</Link>
       </li>,
     ];
   }
