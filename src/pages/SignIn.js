@@ -21,7 +21,10 @@ const SignIn = () => {
         email
       )
     ) {
-      M.toast({ html: "invalid email", classes: "#c62828 red darken-3" });
+      M.toast({
+        html: "Invalid email address",
+        classes: "#c62828 red darken-3",
+      });
       return;
     }
     const authService = new AuthService();
@@ -36,7 +39,7 @@ const SignIn = () => {
         payload: authService.getLocalUser(),
       });
       M.toast({
-        html: "signedin success",
+        html: "You have successfully signed in.",
         classes: "#43a047 green darken-1",
       });
       history.push("/");
@@ -73,7 +76,7 @@ const SignIn = () => {
             Login
           </button>
           <h5>
-            <Link to="/signup">Dont have an account ?</Link>
+            <Link to="/signup">No account yet?</Link>
           </h5>
           <h6>
             <Link to="/reset-password">Forgot password ?</Link>

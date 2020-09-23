@@ -24,7 +24,7 @@ const CreatePost = () => {
           M.toast({ html: result.error, classes: "#c62828 red darken-3" });
         } else {
           M.toast({
-            html: "Post has been successfully created",
+            html: "Your post has been successfully created",
             classes: "#43a047 green darken-1",
           });
           history.push("/");

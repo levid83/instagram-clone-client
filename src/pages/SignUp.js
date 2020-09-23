@@ -28,7 +28,10 @@ const SignUp = () => {
         email
       )
     ) {
-      M.toast({ html: "invalid email", classes: "#c62828 red darken-3" });
+      M.toast({
+        html: "Invalid email address",
+        classes: "#c62828 red darken-3",
+      });
       return;
     }
     const data = await new AuthService().signup({
@@ -101,7 +104,7 @@ const SignUp = () => {
             Sign Up
           </button>
           <h5>
-            <Link to="/signin">Already have an account ?</Link>
+            <Link to="/signin">&#x2190; Back to login</Link>
           </h5>
         </div>
       </form>
