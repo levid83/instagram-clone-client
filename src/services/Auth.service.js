@@ -35,6 +35,37 @@ export default class AuthService {
     }
   }
 
+  async resetPasswod(email) {
+    try {
+      const result = await fetch("/reset-password", {
+        method: "post",
+        headers: this._requestHeaders(),
+        body: JSON.stringify({
+          email,
+        }),
+      });
+      return result.json();
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async getNewPasswod(password, token) {
+    try {
+      const result = await fetch("/new-password", {
+        method: "post",
+        headers: this._requestHeaders(),
+        body: JSON.stringify({
+          password,
+          token,
+        }),
+      });
+      return result.json();
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   saveLocalUser(data) {
     localStorage.setItem("jwt", data.token);
     localStorage.setItem("user", JSON.stringify(data.user));
