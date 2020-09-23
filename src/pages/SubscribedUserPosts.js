@@ -16,7 +16,7 @@ const SubscribedUserPosts = () => {
 
   const deletePost = async (postId) => {
     const result = await postService.deletePost(postId);
-    const newData = data.filter((item) => item._id !== result._id);
+    const newData = data.filter((item) => item._id !== result.postId);
     setData(newData);
   };
 

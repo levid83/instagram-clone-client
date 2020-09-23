@@ -14,7 +14,7 @@ const Home = () => {
 
   const deletePost = (postId) => {
     postService.deletePost(postId).then((result) => {
-      setPosts(posts.filter((post) => post._id !== result._id));
+      setPosts(posts.filter((post) => post._id !== result.postId));
     });
   };
   return (
