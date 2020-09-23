@@ -19,7 +19,7 @@ const Routing = () => {
 
   return (
     <Switch>
-      <Route exact path="/" component={Home} />
+      <GuardedRoute exact path="/" component={Home} auth={isAuthenticated} />
 
       <Route path="/signin" component={SignIn} />
 
