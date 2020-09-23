@@ -2,10 +2,7 @@ export default class UserService {
   async updatePicture(url) {
     const result = await fetch("/update-picture", {
       method: "put",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("jwt"),
-      },
+      headers: this._requestHeaders(),
       body: JSON.stringify({
         picture: url,
       }),
@@ -16,9 +13,7 @@ export default class UserService {
   async getUser(userId) {
     try {
       const result = await fetch(`/user/${userId}`, {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("jwt"),
-        },
+        headers: this._requestHeaders(),
       });
       return result.json();
     } catch (err) {
@@ -30,10 +25,7 @@ export default class UserService {
     try {
       const result = await fetch("/follow-user", {
         method: "put",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + localStorage.getItem("jwt"),
-        },
+        headers: this._requestHeaders(),
         body: JSON.stringify({
           followId: userId,
         }),
@@ -48,10 +40,7 @@ export default class UserService {
     try {
       const result = await fetch("/unfollow-user", {
         method: "put",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + localStorage.getItem("jwt"),
-        },
+        headers: this._requestHeaders(),
         body: JSON.stringify({
           unfollowId: userId,
         }),
@@ -60,5 +49,12 @@ export default class UserService {
     } catch (err) {
       console.log(err);
     }
+  }
+
+  _requestHeaders() {
+    return {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + localStorage.getItem("jwt"),
+    };
   }
 }

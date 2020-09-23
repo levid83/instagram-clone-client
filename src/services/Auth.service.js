@@ -5,9 +5,7 @@ export default class AuthService {
     try {
       let result = await fetch("/signup", {
         method: "post",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: this._requestHeaders(),
         body: JSON.stringify({
           name,
           password,
@@ -25,9 +23,7 @@ export default class AuthService {
     try {
       let result = await fetch("/signin", {
         method: "post",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: this._requestHeaders(),
         body: JSON.stringify({
           email,
           password,
@@ -53,5 +49,11 @@ export default class AuthService {
     if (!token) return true;
     const decodedToken = jwt.decode(token);
     return !decodedToken || decodedToken.exp <= Date.now() / 1000;
+  }
+
+  _requestHeaders() {
+    return {
+      "Content-Type": "application/json",
+    };
   }
 }
