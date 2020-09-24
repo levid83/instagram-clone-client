@@ -1,11 +1,6 @@
 import styled from "styled-components";
-import px2vw from "../utils/px2vw";
 
-import {
-  cardImageMaxWidth,
-  overlayBackground,
-  border,
-} from "../styles/variables";
+import { overlayBackground, border } from "../styles/variables";
 
 import { Card } from "./Card";
 
@@ -46,7 +41,7 @@ export const PictureContainer = styled.div`
   }
   & img {
     display: block;
-    max-width: ${px2vw(cardImageMaxWidth)};
+    max-width: 100%;
   }
 
   & .likes {

@@ -1,9 +1,19 @@
 import styled from "styled-components";
-import { cardWidth, cardMargin, cardPadding } from "../styles/variables";
-import px2vw from "../utils/px2vw";
 
 export const Card = styled.div`
-  margin: ${px2vw(cardMargin)} auto;
-  padding: ${px2vw(cardPadding)};
-  max-width: ${px2vw(cardWidth)};
+  margin: 1em auto;
+  padding: 1em;
+
+  max-width: 100%;
+
+  @media (min-width: 600px) {
+    max-width: 80%;
+  }
+  @media (min-width: 768px) {
+    max-width: 70%;
+  }
+
+  @media (min-width: 1024px) {
+    max-width: 50%;
+  }
 `;
