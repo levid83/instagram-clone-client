@@ -54,19 +54,17 @@ const Post = (props) => {
           </div>
         </div>
       </PictureContainer>
-      <PostContent className="card-content">
-        <p className="content">
-          <Link
-            to={
-              post.postedBy._id !== user.id
-                ? "/user-profile/" + post.postedBy._id
-                : "/profile"
-            }
-          >
-            {post.postedBy.name}
-          </Link>
-          : {post.body}
-        </p>
+      <PostContent className="content">
+        <Link
+          to={
+            post.postedBy._id !== user.id
+              ? "/user-profile/" + post.postedBy._id
+              : "/profile"
+          }
+        >
+          {post.postedBy.name}
+        </Link>
+        : {post.body}
         <PostComments comments={post.comments} />
         <CreateComment onComment={comment} postId={post._id} />
       </PostContent>

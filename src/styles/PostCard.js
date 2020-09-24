@@ -57,19 +57,41 @@ export const PictureContainer = styled.div`
 `;
 
 export const PostContent = styled.div`
-  align-self: stretch;
-  & .content {
-    padding-bottom: 10px;
-    border-bottom: ${border};
-  }
+  padding: 1em 0;
+  border-bottom: ${border};
+  text-align: justify;
 
   & input[type="text"] {
-    border: ${border};
+    border-bottom: ${border};
   }
 
   & .input-field {
     display: flex;
     align-items: center;
     vertical-align: middle;
+  }
+  & .comment {
+    margin: 1em 0;
+    display: flex;
+    align-items: flex-start;
+
+    & :first-child {
+      padding-right: 0.5em;
+    }
+  }
+  & .create-comment {
+    display: flex;
+    flex-direction: column;
+
+    @media (min-width: 600px) {
+      flex-direction: row;
+    }
+
+    & .text {
+      width: 100%;
+      @media (min-width: 600px) {
+        width: 60%;
+      }
+    }
   }
 `;
