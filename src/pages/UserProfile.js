@@ -5,6 +5,7 @@ import PostList from "../components/PostList";
 import { UserAction } from "../redux/userReducer";
 
 import UserService from "../services/User.service";
+import ProfilePicture from "../styles/ProfilePicture";
 
 const userService = new UserService();
 
@@ -13,51 +14,43 @@ const UserProfile = () => {
   const user = useSelector((state) => state);
   const dispatch = useDispatch();
   const { userId } = useParams();
-  const [showfollow, setShowFollow] = useState(
-    user ? !user.following.includes(userId) : true
-  );
 
   useEffect(() => {
     userService.getUser(userId).then((result) => setProfile(result));
   }, [userId]);
 
-  const followUser = async () => {
-    const newUser = await userService.followUser(userId);
+  const toggleFollowUser = async () => {
+    let newUser;
+    if (user) {
+      if (!user.following.includes(userId)) {
+        newUser = await userService.followUser(userId);
+        setProfile((prevState) => ({
+          ...prevState,
+          user: {
+            ...prevState.user,
+            followers: [...prevState.user.followers, newUser._id],
+          },
+        }));
+      } else {
+        newUser = await userService.unfollowUser(userId);
+        setProfile((prevState) => ({
+          ...prevState,
+          user: {
+            ...prevState.user,
+            followers: prevState.user.followers.filter(
+              (item) => item !== newUser._id
+            ),
+          },
+        }));
+      }
+    }
+    localStorage.setItem("user", JSON.stringify(newUser));
     dispatch({
       type: UserAction.UPDATE_FOLLOWERS,
       payload: { following: newUser.following, followers: newUser.followers },
     });
-    localStorage.setItem("user", JSON.stringify(newUser));
-    setProfile((prevState) => ({
-      ...prevState,
-      user: {
-        ...prevState.user,
-        followers: [...prevState.user.followers, newUser._id],
-      },
-    }));
-    setShowFollow(false);
   };
 
-  const unfollowUser = async () => {
-    const newUser = await userService.unfollowUser(userId);
-    dispatch({
-      type: UserAction.UPDATE_FOLLOWERS,
-      payload: { following: newUser.following, followers: newUser.followers },
-    });
-    localStorage.setItem("user", JSON.stringify(newUser));
-
-    setProfile((prevState) => ({
-      ...prevState,
-      user: {
-        ...prevState.user,
-        followers: prevState.user.followers.filter(
-          (item) => item !== newUser._id
-        ),
-      },
-    }));
-
-    setShowFollow(true);
-  };
   return (
     <>
       {userProfile ? (
@@ -71,18 +64,16 @@ const UserProfile = () => {
             }}
           >
             <div>
-              <img
-                alt="profile"
-                style={{
-                  width: "160px",
-                  height: "160px",
-                  borderRadius: "80px",
-                }}
-                src={userProfile.user.picture}
-              />
+              <ProfilePicture alt="profile" src={userProfile.user.picture} />
             </div>
             <div>
               <h4>{userProfile.user.name}</h4>
+              <button
+                className="btn waves-effect waves-light #64b5f6 blue darken-1"
+                onClick={() => toggleFollowUser()}
+              >
+                {!user.following.includes(userId) ? "Follow" : "UnFollow"}
+              </button>
               <h5>{userProfile.user.email}</h5>
               <div
                 style={{
@@ -95,27 +86,6 @@ const UserProfile = () => {
                 <h6>{userProfile.user.followers.length} followers</h6>
                 <h6>{userProfile.user.following.length} following</h6>
               </div>
-              {showfollow ? (
-                <button
-                  style={{
-                    margin: "10px",
-                  }}
-                  className="btn waves-effect waves-light #64b5f6 blue darken-1"
-                  onClick={() => followUser()}
-                >
-                  Follow
-                </button>
-              ) : (
-                <button
-                  style={{
-                    margin: "10px",
-                  }}
-                  className="btn waves-effect waves-light #64b5f6 blue darken-1"
-                  onClick={() => unfollowUser()}
-                >
-                  UnFollow
-                </button>
-              )}
             </div>
           </div>
           <div className="gallery">
