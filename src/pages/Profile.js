@@ -5,6 +5,18 @@ import PostService from "../services/Post.service";
 import UserService from "../services/User.service";
 import UploadService from "../services/Upload.service";
 import PostList from "../components/PostList";
+import { Card } from "../styles/Card";
+import ProfilePicture from "../styles/ProfilePicture";
+import UploadPicture from "../components/UploadPicture";
+
+import styled from "styled-components";
+import { UserProfile } from "../styles/UserProfile";
+
+const Gallery = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+`;
 
 const postService = new PostService();
 const userService = new UserService();
@@ -41,60 +53,33 @@ const Profile = () => {
   }, [picture]);
 
   return (
-    <div style={{ maxWidth: "550px", margin: "0px auto" }}>
-      <div
-        style={{
-          margin: "18px 0px",
-          borderBottom: "1px solid grey",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-around",
-          }}
-        >
-          <div>
-            <img
-              alt="profile"
-              style={{ width: "160px", height: "160px", borderRadius: "80px" }}
-              src={user ? user.picture : "loading"}
-            />
-          </div>
-          <div>
-            <h4>{user ? user.name : "loading"}</h4>
-            <h5>{user ? user.email : "loading"}</h5>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                width: "108%",
-              }}
-            >
-              <h6>{posts.length} posts</h6>
-              <h6>{user ? user.followers.length : "0"} followers</h6>
-              <h6>{user ? user.following.length : "0"} following</h6>
-            </div>
+    <>
+      <UserProfile className="card">
+        <div className="picture">
+          <ProfilePicture alt="profile" src={user.picture} />
+          <UploadPicture onSetPicture={setPicture} />
+        </div>
+        <div>
+          <h5>{user.name}</h5>
+          <h6>{user.email}</h6>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
+            <span>{posts.length} posts</span>
+            <span>{user.followers.length} followers</span>
+            <span>{user.following.length} following</span>
           </div>
         </div>
-
-        <div className="file-field input-field" style={{ margin: "10px" }}>
-          <div className="btn #64b5f6 blue darken-1">
-            <span>Update picture</span>
-            <input
-              type="file"
-              onChange={(e) => setPicture(e.target.files[0])}
-            />
-          </div>
-          <div className="file-path-wrapper">
-            <input className="file-path validate" type="text" />
-          </div>
-        </div>
-      </div>
-      <div className="gallery">
-        <PostList posts={posts} />
-      </div>
-    </div>
+      </UserProfile>
+      <Card className="card">
+        <Gallery>
+          <PostList posts={posts} />
+        </Gallery>
+      </Card>
+    </>
   );
 };
 export default Profile;
