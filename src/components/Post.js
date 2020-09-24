@@ -4,6 +4,11 @@ import { Link } from "react-router-dom";
 
 import PostService from "../services/Post.service";
 
+import { PostCard, PictureContainer, PostContent } from "../styles/PostCard";
+import LikeIcon from "../styles/LikeIcon";
+import CreateComment from "./CreateComment";
+import PostComments from "./PostComments";
+
 const postService = new PostService();
 
 const Post = (props) => {
@@ -12,90 +17,60 @@ const Post = (props) => {
 
   const { onDelete } = props;
 
-  const like = async (id) => {
-    setPost(await postService.likePost(id));
+  const toggleLike = async (id) => {
+    if (post.likes.includes(user.id)) setPost(await postService.unlikePost(id));
+    else setPost(await postService.likePost(id));
   };
-  const unlike = async (id) => {
-    setPost(await postService.unlikePost(id));
+  const isLiked = () => {
+    return post.likes.includes(user.id);
   };
 
-  const makeComment = async (text, postId) => {
+  const comment = async (text, postId) => {
     setPost(await postService.addPostComment(text, postId));
   };
 
   return (
-    <div className="card home-card" key={post._id}>
-      <h5 style={{ padding: "5px" }}>
-        <Link
-          to={
-            post.postedBy._id !== user.id
-              ? "/user-profile/" + post.postedBy._id
-              : "/profile"
-          }
-        >
-          {post.postedBy.name}
-        </Link>
-        {post.postedBy._id === user.id && (
-          <i
-            className="material-icons"
-            style={{
-              float: "right",
-            }}
-            onClick={() => onDelete(post._id)}
-          >
-            delete
-          </i>
-        )}
-      </h5>
-      <div className="card-image">
+    <PostCard className="card" key={post._id}>
+      <PictureContainer>
         <img src={post.photo} alt="" />
-      </div>
-      <div className="card-content">
-        <i className="material-icons" style={{ color: "red" }}>
-          favorite
-        </i>
-        {post.likes.includes(user.id) ? (
-          <i
-            className="material-icons"
-            onClick={() => {
-              unlike(post._id);
-            }}
+        <div className="overlay">
+          <h6>{post.title}</h6>
+          <div className="likes">
+            <span>
+              <LikeIcon
+                className="material-icons"
+                onClick={() => toggleLike(post._id)}
+                liked={isLiked()}
+              >
+                favorite
+              </LikeIcon>
+              {post.likes.length} likes{" "}
+            </span>
+            {post.postedBy._id === user.id && (
+              <i className="material-icons" onClick={() => onDelete(post._id)}>
+                delete
+              </i>
+            )}
+          </div>
+        </div>
+      </PictureContainer>
+      <PostContent className="card-content">
+        <p className="content">
+          <Link
+            to={
+              post.postedBy._id !== user.id
+                ? "/user-profile/" + post.postedBy._id
+                : "/profile"
+            }
           >
-            thumb_down
-          </i>
-        ) : (
-          <i
-            className="material-icons"
-            onClick={() => {
-              like(post._id);
-            }}
-          >
-            thumb_up
-          </i>
-        )}
-
-        <h6>{post.likes.length} likes</h6>
-        <h6>{post.title}</h6>
-        <p>{post.body}</p>
-        {post.comments.map((record) => {
-          return (
-            <h6 key={record._id}>
-              <span style={{ fontWeight: "500" }}>{record.postedBy.name}</span>
-              {": "}
-              {record.text}
-            </h6>
-          );
-        })}
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            makeComment(e.target[0].value, post._id);
-          }}
-        >
-          <input type="text" placeholder="add a comment" />
-        </form>
-      </div>
-    </div>
+            {post.postedBy.name}
+          </Link>
+          : {post.body}
+        </p>
+        <PostComments comments={post.comments} />
+        <CreateComment onComment={comment} postId={post._id} />
+      </PostContent>
+    </PostCard>
   );
 };
 export default Post;
