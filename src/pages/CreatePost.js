@@ -5,6 +5,28 @@ import { useHistory } from "react-router-dom";
 import UploadService from "../services/Upload.service";
 import PostService from "../services/Post.service";
 
+import { Card } from "../styles/Card";
+import UploadPicture from "../components/UploadPicture";
+import styled from "styled-components";
+import { device } from "../styles/devices";
+
+const CreatePostCard = styled(Card)`
+  @media ${device.small} {
+    max-width: 70%;
+  }
+  @media ${device.medium} {
+    max-width: 60%;
+  }
+
+  @media ${device.large} {
+    max-width: 40%;
+  }
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 const CreatePost = () => {
   const history = useHistory();
   const [title, setTitle] = useState("");
@@ -43,43 +65,35 @@ const CreatePost = () => {
   };
 
   return (
-    <div
-      className="card input-field"
-      style={{
-        margin: "30px auto",
-        maxWidth: "500px",
-        padding: "20px",
-        textAlign: "center",
-      }}
-    >
-      <input
-        type="text"
-        placeholder="title"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="body"
-        value={body}
-        onChange={(e) => setBody(e.target.value)}
-      />
-      <div className="file-field input-field">
-        <div className="btn #64b5f6 blue darken-1">
-          <span>Upload picture</span>
-          <input type="file" onChange={(e) => setImage(e.target.files[0])} />
-        </div>
-        <div className="file-path-wrapper">
-          <input className="file-path validate" type="text" />
-        </div>
-      </div>
-      <button
-        className="btn waves-effect waves-light #64b5f6 blue darken-1"
-        onClick={() => postPicture()}
+    <CreatePostCard className="card">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+        }}
       >
-        Submit post
-      </button>
-    </div>
+        <h5>Create post</h5>
+        <input
+          type="text"
+          placeholder="title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="body"
+          value={body}
+          onChange={(e) => setBody(e.target.value)}
+        />
+        <UploadPicture onSetPicture={setImage} />
+        <button
+          className="btn waves-effect waves-light #64b5f6 blue darken-1 submit"
+          onClick={() => postPicture()}
+        >
+          Submit post
+        </button>
+      </form>
+    </CreatePostCard>
   );
 };
 export default CreatePost;
