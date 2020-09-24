@@ -18,11 +18,11 @@ const Home = () => {
     });
   };
   return (
-    <div className="home">
+    <>
       {posts.map((post) => (
         <Post post={post} key={post._id} onDelete={deletePost} />
       ))}
-    </div>
+    </>
   );
 };
 export default Home;

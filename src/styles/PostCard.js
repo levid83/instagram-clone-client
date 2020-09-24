@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { device } from "./devices";
 
 import { overlayBackground, border } from "../styles/variables";
 import { Card } from "./Card";
@@ -57,6 +56,7 @@ export const PictureContainer = styled.div`
 `;
 
 export const PostContent = styled.div`
+  width: 100%;
   padding: 1em 0;
   border-bottom: ${border};
   text-align: justify;
@@ -77,22 +77,6 @@ export const PostContent = styled.div`
 
     & :first-child {
       padding-right: 0.5em;
-    }
-  }
-  & .create-comment {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-
-    @media ${device.small} {
-      flex-direction: row;
-    }
-
-    & .text {
-      width: 100%;
-      @media ${device.small} {
-        width: 60%;
-      }
     }
   }
 `;
