@@ -37,9 +37,9 @@ const NavLinks = () => {
         <Link to="/subscribed-user-posts">My following Posts</Link>
       </li>,
       <li key="5">
-        <button className="btn #c62828 red darken-3" onClick={onLogout}>
+        <Link to="/signin" onClick={onLogout}>
           Sign Out
-        </button>
+        </Link>
       </li>,
     ];
   } else {
