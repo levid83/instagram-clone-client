@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components";
+import { device } from "./devices";
 
 export const Global = createGlobalStyle`
   * {
@@ -9,14 +10,14 @@ export const Global = createGlobalStyle`
   :root {
       font-size:14px;
 
-      @media (min-width: 600px) {
+      @media ${device.small} {
         font-size: 16px;
       }
-      @media (min-width: 768px) {
+      @media ${device.medium}{
         font-size: 18px;
       }
 
-      @media (min-width: 1024px) {
+      @media ${device.large} {
         font-size: 18px;
       }
     }

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { device } from "./devices";
 
 export const Card = styled.div`
   margin: 1em auto;
@@ -6,14 +7,14 @@ export const Card = styled.div`
 
   max-width: 100%;
 
-  @media (min-width: 600px) {
+  @media ${device.small} {
     max-width: 80%;
   }
-  @media (min-width: 768px) {
+  @media ${device.medium} {
     max-width: 70%;
   }
 
-  @media (min-width: 1024px) {
+  @media ${device.large} {
     max-width: 50%;
   }
 `;

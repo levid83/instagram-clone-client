@@ -24,7 +24,7 @@ const NavBar = () => {
     });
   }, []);
   return (
-    <>
+    <div className="navbar-fixed">
       <nav>
         <div className="nav-wrapper white">
           {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
@@ -42,7 +42,7 @@ const NavBar = () => {
       <ul className="sidenav right" id="nav-mobile">
         <NavLinks />
       </ul>
-    </>
+    </div>
   );
 };
 

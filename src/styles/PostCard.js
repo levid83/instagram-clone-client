@@ -1,7 +1,7 @@
 import styled from "styled-components";
+import { device } from "./devices";
 
 import { overlayBackground, border } from "../styles/variables";
-
 import { Card } from "./Card";
 
 export const PostCard = styled(Card)`
@@ -82,14 +82,15 @@ export const PostContent = styled.div`
   & .create-comment {
     display: flex;
     flex-direction: column;
+    justify-content: center;
 
-    @media (min-width: 600px) {
+    @media ${device.small} {
       flex-direction: row;
     }
 
     & .text {
       width: 100%;
-      @media (min-width: 600px) {
+      @media ${device.small} {
         width: 60%;
       }
     }
