@@ -6,7 +6,7 @@ import { UserAction } from "./redux/userReducer";
 import AuthService from "./services/Auth.service";
 
 import Routing from "./routes";
-
+import Global from "./styles/Global";
 import "./App.css";
 
 import NavBar from "./components/NavBar";
@@ -25,6 +25,7 @@ function App() {
   });
   return (
     <BrowserRouter>
+      <Global />
       <NavBar />
       <Routing />
     </BrowserRouter>
