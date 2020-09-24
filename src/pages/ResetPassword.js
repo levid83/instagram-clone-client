@@ -4,6 +4,8 @@ import M from "materialize-css";
 
 import AuthService from "../services/Auth.service";
 
+import { AuthCard } from "../styles/AuthCard";
+
 const authService = new AuthService();
 
 const ResetPassword = () => {
@@ -30,9 +32,14 @@ const ResetPassword = () => {
   };
 
   return (
-    <div className="mycard">
-      <div className="card auth-card input-field">
-        <h2>Instagram</h2>
+    <AuthCard className="card">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+        }}
+      >
+        <h5>Reset password</h5>
         <input
           type="text"
           placeholder="email"
@@ -43,10 +50,10 @@ const ResetPassword = () => {
           className="btn waves-effect waves-light #64b5f6 blue darken-1"
           onClick={() => postEmail()}
         >
-          Reset password
+          Submit
         </button>
-      </div>
-    </div>
+      </form>
+    </AuthCard>
   );
 };
 export default ResetPassword;

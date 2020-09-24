@@ -6,6 +6,7 @@ import AuthService from "../services/Auth.service";
 import { UserAction } from "../redux/userReducer";
 
 import M from "materialize-css";
+import { AuthCard } from "../styles/AuthCard";
 
 const SignIn = () => {
   const history = useHistory();
@@ -46,44 +47,40 @@ const SignIn = () => {
     }
   };
   return (
-    <div className="mycard">
+    <AuthCard className="card">
       <form
         onSubmit={(e) => {
           e.preventDefault();
           e.stopPropagation();
         }}
       >
-        <div className="card auth-card input-field">
-          <h2>Instagram</h2>
-          <input
-            type="text"
-            placeholder="email"
-            value={email}
-            autoComplete="username"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            type="password"
-            placeholder="password"
-            value={password}
-            autoComplete="current-password"
-            onChange={(e) => setPasword(e.target.value)}
-          />
-          <button
-            className="btn waves-effect waves-light #64b5f6 blue darken-1"
-            onClick={(e) => PostData(e)}
-          >
-            Login
-          </button>
-          <h5>
-            <Link to="/signup">No account yet?</Link>
-          </h5>
-          <h6>
-            <Link to="/reset-password">Forgot password ?</Link>
-          </h6>
+        <h5>Sign In</h5>
+        <input
+          type="text"
+          placeholder="email"
+          value={email}
+          autoComplete="username"
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          type="password"
+          placeholder="password"
+          value={password}
+          autoComplete="current-password"
+          onChange={(e) => setPasword(e.target.value)}
+        />
+        <button
+          className="btn waves-effect waves-light #64b5f6 blue darken-1"
+          onClick={(e) => PostData(e)}
+        >
+          Login
+        </button>
+        <div className="links">
+          <Link to="/signup">No account yet?</Link>
+          <Link to="/reset-password">Forgot password ?</Link>
         </div>
       </form>
-    </div>
+    </AuthCard>
   );
 };
 export default React.memo(SignIn);

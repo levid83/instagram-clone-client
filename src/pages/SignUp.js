@@ -4,6 +4,7 @@ import AuthService from "../services/Auth.service";
 import UploadService from "../services/Upload.service";
 
 import M from "materialize-css";
+import { AuthCard } from "../styles/AuthCard";
 
 const SignUp = () => {
   const history = useHistory();
@@ -56,59 +57,55 @@ const SignUp = () => {
     }
   };
   return (
-    <div className="mycard">
+    <AuthCard className="card">
       <form
         onSubmit={(e) => {
           e.preventDefault();
           e.stopPropagation();
         }}
       >
-        <div className="card auth-card input-field">
-          <h2>Instagram</h2>
-          <input
-            type="text"
-            placeholder="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="email"
-            value={email}
-            autoComplete="username"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            type="password"
-            placeholder="password"
-            value={password}
-            autoComplete="current-password"
-            onChange={(e) => setPasword(e.target.value)}
-          />
-          <div className="file-field input-field">
-            <div className="btn #64b5f6 blue darken-1">
-              <span>Upload picture</span>
-              <input
-                type="file"
-                onChange={(e) => setImage(e.target.files[0])}
-              />
-            </div>
-            <div className="file-path-wrapper">
-              <input className="file-path validate" type="text" />
-            </div>
+        <h5>Sign Up</h5>
+        <input
+          type="text"
+          placeholder="name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="email"
+          value={email}
+          autoComplete="username"
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          type="password"
+          placeholder="password"
+          value={password}
+          autoComplete="current-password"
+          onChange={(e) => setPasword(e.target.value)}
+        />
+        <div className="file-field input-field">
+          <div className="btn #64b5f6 blue darken-1">
+            <span>Upload picture</span>
+            <input type="file" onChange={(e) => setImage(e.target.files[0])} />
           </div>
+          <div className="file-path-wrapper">
+            <input className="file-path validate" type="text" />
+          </div>
+        </div>
+
+        <div className="links">
           <button
             className="btn waves-effect waves-light #64b5f6 blue darken-1"
             onClick={(e) => PostData(e)}
           >
             Sign Up
           </button>
-          <h5>
-            <Link to="/signin">&#x2190; Back to login</Link>
-          </h5>
+          <Link to="/signin">&#x2190; Back to login</Link>
         </div>
       </form>
-    </div>
+    </AuthCard>
   );
 };
 export default React.memo(SignUp);
