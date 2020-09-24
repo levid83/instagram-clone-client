@@ -1,15 +1,7 @@
 import styled from "styled-components";
 import { device } from "./devices";
-
-import { overlayBackground, border } from "../styles/variables";
 import { Card } from "./Card";
-
-export const AuthCard = styled.div`
-  margin: 1em auto;
-  padding: 1em;
-
-  max-width: 100%;
-
+export const AuthCard = styled(Card)`
   @media ${device.small} {
     max-width: 70%;
   }
