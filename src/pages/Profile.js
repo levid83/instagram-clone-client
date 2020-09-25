@@ -4,19 +4,14 @@ import { useSelector, useDispatch } from "react-redux";
 import PostService from "../services/Post.service";
 import UserService from "../services/User.service";
 import UploadService from "../services/Upload.service";
+
 import PostList from "../components/PostList";
-import { Card } from "../styles/Card";
-import ProfilePicture from "../styles/ProfilePicture";
 import UploadPicture from "../components/UploadPicture";
 
-import styled from "styled-components";
-import { UserProfile } from "../styles/UserProfile";
-
-const Gallery = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-`;
+import { UserProfile, Gallery } from "../styles/UserProfile";
+import { Card } from "../styles/Card";
+import ProfilePicture from "../styles/ProfilePicture";
+import Spinner from "../styles/Spinner";
 
 const postService = new PostService();
 const userService = new UserService();
@@ -60,14 +55,9 @@ const Profile = () => {
           <UploadPicture onSetPicture={setPicture} />
         </div>
         <div>
-          <h5>{user.name}</h5>
+          <h6>{user.name}</h6>
           <h6>{user.email}</h6>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
+          <div className="stats">
             <span>{posts.length} posts</span>
             <span>{user.followers.length} followers</span>
             <span>{user.following.length} following</span>
@@ -75,11 +65,15 @@ const Profile = () => {
         </div>
       </UserProfile>
       <Card className="card">
-        <Gallery>
-          <PostList posts={posts} />
-        </Gallery>
+        {posts ? (
+          <Gallery>
+            <PostList posts={posts} />
+          </Gallery>
+        ) : (
+          Spinner
+        )}
       </Card>
     </>
   );
 };
-export default Profile;
+export default React.memo(Profile);

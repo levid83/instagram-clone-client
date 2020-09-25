@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import PostList from "../components/PostList";
-import { UserAction } from "../redux/userReducer";
 
+import { UserAction } from "../redux/userReducer";
 import UserService from "../services/User.service";
+
+import PostList from "../components/PostList";
+
+import { UserProfile, Gallery } from "../styles/UserProfile";
+import { Card } from "../styles/Card";
 import ProfilePicture from "../styles/ProfilePicture";
+import Spinner from "../styles/Spinner";
 
 const userService = new UserService();
 
-const UserProfile = () => {
+const Profile = () => {
   const [userProfile, setProfile] = useState(null);
   const user = useSelector((state) => state);
   const dispatch = useDispatch();
@@ -54,48 +59,37 @@ const UserProfile = () => {
   return (
     <>
       {userProfile ? (
-        <div style={{ maxWidth: "550px", margin: "0px auto" }}>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-around",
-              margin: "18px 0px",
-              borderBottom: "1px solid grey",
-            }}
-          >
-            <div>
+        <>
+          <UserProfile className="card">
+            <div className="picture">
               <ProfilePicture alt="profile" src={userProfile.user.picture} />
             </div>
             <div>
-              <h4>{userProfile.user.name}</h4>
+              <h6>{userProfile.user.name}</h6>
               <button
                 className="btn waves-effect waves-light #64b5f6 blue darken-1"
                 onClick={() => toggleFollowUser()}
               >
                 {!user.following.includes(userId) ? "Follow" : "UnFollow"}
               </button>
-              <h5>{userProfile.user.email}</h5>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  width: "108%",
-                }}
-              >
-                <h6>{userProfile.posts.length} posts</h6>
-                <h6>{userProfile.user.followers.length} followers</h6>
-                <h6>{userProfile.user.following.length} following</h6>
+              <h6>{userProfile.user.email}</h6>
+              <div className="stats">
+                <span>{userProfile.posts.length} posts</span>
+                <span>{userProfile.user.followers.length} followers</span>
+                <span>{userProfile.user.following.length} following</span>
               </div>
             </div>
-          </div>
-          <div className="gallery">
-            <PostList posts={userProfile.posts} />
-          </div>
-        </div>
+          </UserProfile>
+          <Card className="card">
+            <Gallery>
+              <PostList posts={userProfile.posts} />
+            </Gallery>
+          </Card>
+        </>
       ) : (
-        <h2>loading...!</h2>
+        <Spinner />
       )}
     </>
   );
 };
-export default UserProfile;
+export default React.memo(Profile);
