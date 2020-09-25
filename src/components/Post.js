@@ -18,7 +18,7 @@ const Post = (props) => {
   const { onDelete } = props;
 
   const isLiked = () => {
-    return post.likes.includes(user.id);
+    return post.likes.includes(user._id);
   };
 
   const toggleLike = async (id) => {
@@ -47,7 +47,7 @@ const Post = (props) => {
               </LikeIcon>
               {post.likes.length} likes{" "}
             </span>
-            {post.postedBy._id === user.id && (
+            {post.postedBy._id === user._id && (
               <i className="material-icons" onClick={() => onDelete(post._id)}>
                 delete
               </i>
@@ -58,7 +58,7 @@ const Post = (props) => {
       <PostContent className="content">
         <Link
           to={
-            post.postedBy._id !== user.id
+            post.postedBy._id !== user._id
               ? "/user-profile/" + post.postedBy._id
               : "/profile"
           }

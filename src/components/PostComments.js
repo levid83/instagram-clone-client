@@ -11,7 +11,7 @@ const PostComments = (props) => {
         <div>
           <Link
             to={
-              comment.postedBy._id !== user.id
+              comment.postedBy._id !== user._id
                 ? "/user-profile/" + comment.postedBy._id
                 : "/profile"
             }

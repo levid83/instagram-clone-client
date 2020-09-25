@@ -47,7 +47,7 @@ const UserSearchModal = () => {
           {userDetails.map((item) => {
             return (
               <Link
-                to={item.id !== user.id ? "/profile/" + item.id : "/profile"}
+                to={item.id !== user._id ? "/profile/" + item.id : "/profile"}
                 onClick={() => {
                   M.Modal.getInstance(searchModal.current).close();
                   setSearch("");
