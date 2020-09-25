@@ -3,7 +3,24 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
+import UserSearchModal from "./UserSearchModal";
 import NavLinks from "./NavLinks";
+
+const Navigation = styled.ul`
+  & .search {
+    color: black;
+  }
+`;
+
+const SideNav = styled.ul`
+  & li {
+    padding: 0 32px;
+
+    & a {
+      padding: 0;
+    }
+  }
+`;
 
 const BrandLogoLink = styled(Link)`
   font-family: "Grand Hotel", cursive;
@@ -25,7 +42,7 @@ const NavBar = () => {
   }, []);
   return (
     <>
-      <div className="navbar-fixed">
+      <Navigation className="navbar-fixed">
         <nav>
           <div className="nav-wrapper white">
             {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
@@ -40,10 +57,11 @@ const NavBar = () => {
             </ul>
           </div>
         </nav>
-      </div>
-      <ul className="sidenav sidenav-close right" id="nav-mobile">
+      </Navigation>
+      <SideNav className="sidenav sidenav-close right" id="nav-mobile">
         <NavLinks />
-      </ul>
+      </SideNav>
+      <UserSearchModal />
     </>
   );
 };

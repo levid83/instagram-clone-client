@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 
 import { UserAction } from "../redux/userReducer";
-import UserSearchModal from "./UserSearchModal";
 
 const NavLinks = () => {
   const dispatch = useDispatch();
@@ -18,14 +17,9 @@ const NavLinks = () => {
   if (isAuthenticated) {
     return [
       <li key="1">
-        <i
-          data-target="modal1"
-          className="large material-icons modal-trigger"
-          style={{ color: "black" }}
-        >
+        <i data-target="modal1" className="material-icons modal-trigger search">
           search
         </i>
-        <UserSearchModal />
       </li>,
       <li key="2">
         <Link to="/profile">Profile</Link>

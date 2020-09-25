@@ -32,13 +32,6 @@ export const Global = createGlobalStyle`
     padding: 0.2em;
   }
 
-  .red {
-    color: red;
-  }
-  .white {
-    color: white;
-  }
-
   .material-icons:hover {
     cursor: pointer;
   }
@@ -52,7 +45,7 @@ export const Global = createGlobalStyle`
   }
 
   #toast-container {
-    top: 30px !important;
+    bottom: 30px !important;
     right: 20px !important;
     left: auto !important;
   }
