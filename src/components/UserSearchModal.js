@@ -3,30 +3,26 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import M from "materialize-css";
 
+import UserService from "../services/User.service";
+
+const userService = new UserService();
+
 const UserSearchModal = () => {
   const user = useSelector((state) => state);
 
   const searchModal = useRef(null);
   const [search, setSearch] = useState("");
-  const [userDetails, setUserDetails] = useState([]);
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
     M.Modal.init(searchModal.current);
   }, []);
 
-  const fetchUsers = async (query) => {
+  const searchUsers = async (query) => {
     setSearch(query);
-    const result = await fetch("/search-users", {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        query,
-      }),
-    });
-    const { user } = result.json();
-    setUserDetails(user);
+    if (query.length < 3) return;
+    const users = await userService.searchUser(query);
+    if (users) setUsers(users);
   };
 
   return (
@@ -41,19 +37,20 @@ const UserSearchModal = () => {
           type="text"
           placeholder="search users"
           value={search}
-          onChange={(e) => fetchUsers(e.target.value)}
+          onChange={(e) => searchUsers(e.target.value)}
         />
         <ul className="collection">
-          {userDetails.map((item) => {
+          {users.map((u) => {
             return (
               <Link
-                to={item._id !== user._id ? "/profile/" + item._id : "/profile"}
+                to={u._id !== user._id ? "/user-profile/" + u._id : "/profile"}
                 onClick={() => {
                   M.Modal.getInstance(searchModal.current).close();
                   setSearch("");
                 }}
+                key={u._id}
               >
-                <li className="collection-item">{item.email}</li>
+                <li className="collection-item">{u.email}</li>
               </Link>
             );
           })}

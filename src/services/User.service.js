@@ -21,6 +21,24 @@ export default class UserService {
     }
   }
 
+  async searchUser(query) {
+    try {
+      const result = await fetch("/search-users", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          query,
+        }),
+      });
+      const { users } = await result.json();
+      return users;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   async followUser(userId) {
     try {
       const result = await fetch("/follow-user", {
