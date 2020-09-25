@@ -13,8 +13,7 @@ const GuardedRoute = ({ component: Component, auth, ...rest }) => (
 );
 
 GuardedRoute.propTypes = {
-  component: PropTypes.oneOfType([PropTypes.func, PropTypes.element])
-    .isRequired,
+  component: PropTypes.any.isRequired,
   auth: PropTypes.bool.isRequired,
   path: PropTypes.string,
   exact: PropTypes.bool,

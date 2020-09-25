@@ -24,4 +24,4 @@ const PostComments = (props) => {
     );
   });
 };
-export default PostComments;
+export default React.memo(PostComments);

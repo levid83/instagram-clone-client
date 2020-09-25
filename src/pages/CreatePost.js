@@ -66,34 +66,27 @@ const CreatePost = () => {
 
   return (
     <CreatePostCard className="card">
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-        }}
+      <h5>Create post</h5>
+      <input
+        type="text"
+        placeholder="title"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+      />
+      <input
+        type="text"
+        placeholder="body"
+        value={body}
+        onChange={(e) => setBody(e.target.value)}
+      />
+      <UploadPicture onSetPicture={setImage} withPreview />
+      <button
+        className="btn waves-effect waves-light #64b5f6 blue darken-1 submit"
+        onClick={() => postPicture()}
       >
-        <h5>Create post</h5>
-        <input
-          type="text"
-          placeholder="title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="body"
-          value={body}
-          onChange={(e) => setBody(e.target.value)}
-        />
-        <UploadPicture onSetPicture={setImage} />
-        <button
-          className="btn waves-effect waves-light #64b5f6 blue darken-1 submit"
-          onClick={() => postPicture()}
-        >
-          Submit post
-        </button>
-      </form>
+        Submit post
+      </button>
     </CreatePostCard>
   );
 };
-export default CreatePost;
+export default React.memo(CreatePost);

@@ -4,6 +4,8 @@ import Post from "../components/Post";
 
 import PostService from "../services/Post.service";
 
+import Spinner from "../styles/Spinner";
+
 const postService = new PostService();
 
 const SubscribedUserPosts = () => {
@@ -22,10 +24,12 @@ const SubscribedUserPosts = () => {
 
   return (
     <div className="home">
-      {data.map((post) => (
-        <Post post={post} key={post._id} onDelete={deletePost} />
-      ))}
+      {data.length > 0 &&
+        data.map((post) => (
+          <Post post={post} key={post._id} onDelete={deletePost} />
+        ))}
+      {!data && <Spinner />}
     </div>
   );
 };
-export default SubscribedUserPosts;
+export default React.memo(SubscribedUserPosts);

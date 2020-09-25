@@ -53,4 +53,4 @@ const NavLinks = () => {
     ];
   }
 };
-export default NavLinks;
+export default React.memo(NavLinks);

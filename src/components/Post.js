@@ -17,12 +17,13 @@ const Post = (props) => {
 
   const { onDelete } = props;
 
-  const toggleLike = async (id) => {
-    if (post.likes.includes(user.id)) setPost(await postService.unlikePost(id));
-    else setPost(await postService.likePost(id));
-  };
   const isLiked = () => {
     return post.likes.includes(user.id);
+  };
+
+  const toggleLike = async (id) => {
+    if (isLiked()) setPost(await postService.unlikePost(id));
+    else setPost(await postService.likePost(id));
   };
 
   const comment = async (text, postId) => {

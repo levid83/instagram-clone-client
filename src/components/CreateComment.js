@@ -47,7 +47,7 @@ const CreateComment = (props) => {
             ref={textInput}
           ></textarea>
           <button className="btn " type="submit" name="post">
-            Post
+            Send
           </button>
         </div>
       </form>

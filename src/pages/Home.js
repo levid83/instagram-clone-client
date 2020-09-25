@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import Post from "../components/Post";
 
 import PostService from "../services/Post.service";
+import Spinner from "../styles/Spinner";
 
 const postService = new PostService();
 
 const Home = () => {
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState(null);
 
   useEffect(() => {
     postService.getAllPosts().then((result) => setPosts(result.posts));
@@ -19,10 +20,12 @@ const Home = () => {
   };
   return (
     <>
-      {posts.map((post) => (
-        <Post post={post} key={post._id} onDelete={deletePost} />
-      ))}
+      {posts &&
+        posts.map((post) => (
+          <Post post={post} key={post._id} onDelete={deletePost} />
+        ))}
+      {!posts && <Spinner />}
     </>
   );
 };
-export default Home;
+export default React.memo(Home);
