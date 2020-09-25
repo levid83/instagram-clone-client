@@ -24,25 +24,27 @@ const NavBar = () => {
     });
   }, []);
   return (
-    <div className="navbar-fixed">
-      <nav>
-        <div className="nav-wrapper white">
-          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-          <a href="#!" data-target="nav-mobile" className="sidenav-trigger">
-            <i className="material-icons">menu</i>
-          </a>
-          <BrandLogoLink to={isAuthenticated ? "/" : "/signin"}>
-            Instagram
-          </BrandLogoLink>
-          <ul className="right hide-on-med-and-down">
-            <NavLinks />
-          </ul>
-        </div>
-      </nav>
-      <ul className="sidenav right" id="nav-mobile">
+    <>
+      <div className="navbar-fixed">
+        <nav>
+          <div className="nav-wrapper white">
+            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+            <a href="#!" data-target="nav-mobile" className="sidenav-trigger">
+              <i className="material-icons">menu</i>
+            </a>
+            <BrandLogoLink to={isAuthenticated ? "/" : "/signin"}>
+              Instagram
+            </BrandLogoLink>
+            <ul className="right hide-on-med-and-down">
+              <NavLinks />
+            </ul>
+          </div>
+        </nav>
+      </div>
+      <ul className="sidenav sidenav-close right" id="nav-mobile">
         <NavLinks />
       </ul>
-    </div>
+    </>
   );
 };
 
