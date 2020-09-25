@@ -20,4 +20,18 @@ export const UserProfile = styled(Card)`
   & .picture {
     align-self: center;
   }
+  & .stats {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    & span {
+      margin-right: 0.2em;
+    }
+  }
+`;
+
+export const Gallery = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
 `;

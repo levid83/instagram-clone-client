@@ -7,15 +7,20 @@ const StyledImageUploader = styled(ImageUploader)`
     box-shadow: none;
     padding: 0;
     margin: 0;
+    align-items: stretch;
   }
-  .chooseFileButton {
+  & .chooseFileButton {
     background-color: #1e88e5 !important;
+    border-radius: 0;
+  }
+  & .uploadPictureContainer {
+    width: 90%;
   }
 `;
 
-const UploadPicture = (props) => {
-  const { onSetPicture } = props;
-
+const UploadPicture = (
+  { onSetPicture, withPreview } = { withPreview: false }
+) => {
   return (
     <StyledImageUploader
       withIcon={false}
@@ -24,7 +29,7 @@ const UploadPicture = (props) => {
       withLabel={false}
       imgExtension={[".jpg", ".gif", ".png", ".gif"]}
       maxFileSize={5242880}
-      withPreview={false}
+      withPreview={withPreview}
       singleImage={true}
     />
   );

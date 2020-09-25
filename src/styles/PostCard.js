@@ -11,8 +11,10 @@ export const PostCard = styled(Card)`
 `;
 
 export const PictureContainer = styled.div`
+  padding: 10px 0;
   align-self: center;
   position: relative;
+  border-bottom: ${border};
 
   & .overlay {
     position: absolute;
@@ -58,7 +60,6 @@ export const PictureContainer = styled.div`
 export const PostContent = styled.div`
   width: 100%;
   padding: 1em 0;
-  border-bottom: ${border};
   text-align: justify;
 
   & input[type="text"] {
