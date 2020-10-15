@@ -12,6 +12,8 @@ import { Card } from "../styles/Card";
 import ProfilePicture from "../styles/ProfilePicture";
 import Spinner from "../styles/Spinner";
 
+import M from "materialize-css";
+
 const userService = new UserService();
 
 const Profile = () => {
@@ -21,14 +23,28 @@ const Profile = () => {
   const { userId } = useParams();
 
   useEffect(() => {
-    userService.getUser(userId).then((result) => setProfile(result));
+    userService
+      .getUser(userId)
+      .then((result) => setProfile(result))
+      .catch((err) =>
+        M.toast({ html: err.message, classes: "#c62828 red darken-3" })
+      );
   }, [userId]);
 
-  const toggleFollowUser = async () => {
-    let newUser;
+  const toggleFollowUser = () => {
     if (user) {
       if (!user.following.includes(userId)) {
-        newUser = await userService.followUser(userId);
+        followUser(userId);
+      } else {
+        unfollowUser(userId);
+      }
+    }
+  };
+
+  const followUser = (userId) => {
+    userService
+      .followUser(userId)
+      .then((newUser) => {
         setProfile((prevState) => ({
           ...prevState,
           user: {
@@ -36,8 +52,16 @@ const Profile = () => {
             followers: [...prevState.user.followers, newUser._id],
           },
         }));
-      } else {
-        newUser = await userService.unfollowUser(userId);
+        saveLocalUser(newUser);
+      })
+      .catch((err) => {
+        M.toast({ html: err.message, classes: "#c62828 red darken-3" });
+      });
+  };
+  const unfollowUser = (userId) => {
+    userService
+      .unfollowUser(userId)
+      .then((newUser) => {
         setProfile((prevState) => ({
           ...prevState,
           user: {
@@ -47,12 +71,21 @@ const Profile = () => {
             ),
           },
         }));
-      }
-    }
-    localStorage.setItem("user", JSON.stringify(newUser));
+        saveLocalUser(newUser);
+      })
+      .catch((err) => {
+        M.toast({ html: err.message, classes: "#c62828 red darken-3" });
+      });
+  };
+
+  const saveLocalUser = (user) => {
+    localStorage.setItem("user", JSON.stringify(user));
     dispatch({
       type: UserAction.UPDATE_FOLLOWERS,
-      payload: { following: newUser.following, followers: newUser.followers },
+      payload: {
+        following: user.following,
+        followers: user.followers,
+      },
     });
   };
 

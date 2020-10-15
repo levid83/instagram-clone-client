@@ -16,7 +16,7 @@ const SignIn = () => {
 
   const dispatch = useDispatch();
 
-  const PostData = async () => {
+  const PostData = () => {
     if (
       !/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
         email
@@ -29,22 +29,23 @@ const SignIn = () => {
       return;
     }
     const authService = new AuthService();
-    const data = await authService.signin({ email, password });
-
-    if (data.error) {
-      M.toast({ html: data.error, classes: "#c62828 red darken-3" });
-    } else {
-      authService.saveLocalUser(data);
-      dispatch({
-        type: UserAction.SET_USER,
-        payload: authService.getLocalUser(),
-      });
-      M.toast({
-        html: "You have successfully signed in.",
-        classes: "#43a047 green darken-1",
-      });
-      history.push("/");
-    }
+    authService
+      .signin({ email, password })
+      .then((user) => {
+        authService.saveLocalUser(user);
+        dispatch({
+          type: UserAction.SET_USER,
+          payload: authService.getLocalUser(),
+        });
+        M.toast({
+          html: "You have successfully signed in.",
+          classes: "#43a047 green darken-1",
+        });
+        history.push("/");
+      })
+      .catch((err) =>
+        M.toast({ html: err.message, classes: "#c62828 red darken-3" })
+      );
   };
   return (
     <AuthCard className="card">

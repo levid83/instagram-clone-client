@@ -9,6 +9,8 @@ import LikeIcon from "../styles/LikeIcon";
 import CreateComment from "./CreateComment";
 import PostComments from "./PostComments";
 
+import M from "materialize-css";
+
 const postService = new PostService();
 
 const Post = (props) => {
@@ -21,16 +23,28 @@ const Post = (props) => {
     return post.likes.includes(user._id);
   };
 
-  const toggleLike = async (id) => {
-    if (isLiked()) setPost(await postService.unlikePost(id));
-    else {
-      const p = await postService.likePost(id);
-      if (p) setPost(p);
-    }
+  const toggleLike = (id) => {
+    postService
+      .toggleLike(id, isLiked())
+      .then((post) => setPost(post))
+      .catch((err) =>
+        M.toast({
+          html: err.message,
+          classes: "#c62828 red darken-3",
+        })
+      );
   };
 
-  const comment = async (text, postId) => {
-    setPost(await postService.addPostComment(text, postId));
+  const comment = (text, postId) => {
+    postService
+      .addPostComment(text, postId)
+      .then((post) => setPost(post))
+      .catch((err) =>
+        M.toast({
+          html: err.message,
+          classes: "#c62828 red darken-3",
+        })
+      );
   };
 
   return (

@@ -18,11 +18,18 @@ const UserSearchModal = () => {
     M.Modal.init(searchModal.current);
   }, []);
 
-  const searchUsers = async (query) => {
+  const searchUsers = (query) => {
     setSearch(query);
     if (query.length < 3) return;
-    const users = await userService.searchUser(query);
-    if (users) setUsers(users);
+    userService
+      .searchUser(query)
+      .then((users) => users && setUsers(users))
+      .catch((err) =>
+        M.toast({
+          html: err.message,
+          classes: "#c62828 red darken-3",
+        })
+      );
   };
 
   return (

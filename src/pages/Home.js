@@ -4,13 +4,24 @@ import Post from "../components/Post";
 import PostService from "../services/Post.service";
 import Spinner from "../styles/Spinner";
 
+import M from "materialize-css";
+
 const postService = new PostService();
 
 const Home = () => {
   const [posts, setPosts] = useState(null);
 
   useEffect(() => {
-    postService.getAllPosts().then((result) => setPosts(result.posts));
+    postService
+      .getAllPosts()
+      .then((result) => setPosts(result.posts))
+      .catch((err) => {
+        M.toast({
+          html: "Cannot load posts. Please try again later.",
+          classes: "#c62828 red darken-3",
+        });
+        setPosts([]);
+      });
   }, []);
 
   const deletePost = (postId) => {

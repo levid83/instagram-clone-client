@@ -6,20 +6,32 @@ import PostService from "../services/Post.service";
 
 import Spinner from "../styles/Spinner";
 
+import M from "materialize-css";
+
 const postService = new PostService();
 
 const SubscribedUserPosts = () => {
   const [data, setData] = useState([]);
   useEffect(() => {
-    postService.getSubposts().then((result) => {
-      setData(result.posts);
-    });
+    postService
+      .getSubposts()
+      .then((result) => {
+        setData(result.posts);
+      })
+      .catch((err) =>
+        M.toast({ html: err.message, classes: "#c62828 red darken-3" })
+      );
   }, []);
 
-  const deletePost = async (postId) => {
-    const result = await postService.deletePost(postId);
-    const newData = data.filter((item) => item._id !== result.postId);
-    setData(newData);
+  const deletePost = (postId) => {
+    postService
+      .deletePost(postId)
+      .then((result) =>
+        setData(data.filter((item) => item._id !== result.postId))
+      )
+      .catch((err) =>
+        M.toast({ html: err.message, classes: "#c62828 red darken-3" })
+      );
   };
 
   return (
