@@ -1,29 +1,53 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import AuthService from "../services/Auth.service";
 import UploadService from "../services/Upload.service";
 
+import UploadPicture from "../components/UploadPicture";
+
 import M from "materialize-css";
 import { AuthCard } from "../styles/AuthCard";
 
+const uploadService = new UploadService();
+
 const SignUp = () => {
+  const dispatch = useDispatch();
   const history = useHistory();
   const [name, setName] = useState("");
   const [password, setPasword] = useState("");
   const [email, setEmail] = useState("");
-  const [image, setImage] = useState("");
-  const [pictureUrl, setPictureUrl] = useState(undefined);
+  const [picture, setPicture] = useState("");
+  const [pictureUrl, setPictureUrl] = useState("");
+  const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
-    if (pictureUrl) uploadFields();
-  });
+    if (picture) {
+      setUploading(true);
+      uploadService
+        .uploadPicture(picture)
+        .then(async (data) => {
+          dispatch({ type: "UPDATE_PICTURE", payload: data.url });
+          setPictureUrl(data.url);
+          setUploading(false);
+        })
+        .catch((err) => {
+          M.toast({ html: err.message, classes: "#c62828 red darken-3" });
+          setPictureUrl("");
+          setUploading(false);
+        });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [picture]);
 
-  const uploadPicture = async () => {
-    const picture = await new UploadService().uploadPicture(image);
-    if (picture) setPictureUrl(picture.pictureUrl);
-  };
-
-  const uploadFields = async () => {
+  const validFields = () => {
+    if (name.length < 1) {
+      M.toast({
+        html: "Please enter your name",
+        classes: "#c62828 red darken-3",
+      });
+      return false;
+    }
     if (
       !/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
         email
@@ -33,29 +57,49 @@ const SignUp = () => {
         html: "Invalid email address",
         classes: "#c62828 red darken-3",
       });
-      return;
+      return false;
     }
-    const data = await new AuthService().signup({
-      name,
-      password,
-      email,
-      pictureUrl,
-    });
-    if (data.error) {
-      M.toast({ html: data.error, classes: "#c62828 red darken-3" });
-    } else {
-      M.toast({ html: data.message, classes: "#43a047 green darken-1" });
+    if (
+      !/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/.test(
+        password
+      )
+    ) {
+      M.toast({
+        html: `Your password needs to:<br>
+        - include both lower and upper case characters<br>
+        - include at least one number<br>
+        - include at least one symbol<br>
+        - be at least 8 characters long`,
+        classes: "#c62828 red darken-3",
+      });
+      return false;
+    }
+    if (!picture) {
+      M.toast({
+        html: "Please add a profile picture",
+        classes: "#c62828 red darken-3",
+      });
+      return false;
+    }
+    return true;
+  };
+
+  const submitForm = async () => {
+    if (!validFields()) return;
+    try {
+      const result = await new AuthService().signup({
+        name,
+        password,
+        email,
+        picture: pictureUrl,
+      });
+      M.toast({ html: result.message, classes: "#43a047 green darken-1" });
       history.push("/signin");
+    } catch (err) {
+      M.toast({ html: err.message, classes: "#c62828 red darken-3" });
     }
   };
 
-  const PostData = () => {
-    if (image) {
-      uploadPicture();
-    } else {
-      uploadFields();
-    }
-  };
   return (
     <AuthCard className="card">
       <form
@@ -85,20 +129,16 @@ const SignUp = () => {
           autoComplete="current-password"
           onChange={(e) => setPasword(e.target.value)}
         />
-        <div className="file-field input-field">
-          <div className="btn #64b5f6 blue darken-1">
-            <span>Upload picture</span>
-            <input type="file" onChange={(e) => setImage(e.target.files[0])} />
-          </div>
-          <div className="file-path-wrapper">
-            <input className="file-path validate" type="text" />
-          </div>
-        </div>
-
+        <UploadPicture
+          onSetPicture={setPicture}
+          withPreview
+          uploading={uploading}
+        />
         <div className="links">
           <button
             className="btn waves-effect waves-light #64b5f6 blue darken-1"
-            onClick={(e) => PostData(e)}
+            onClick={(e) => submitForm()}
+            disabled={uploading}
           >
             Sign Up
           </button>

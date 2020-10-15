@@ -13,14 +13,16 @@ const NewPassword = () => {
   const [password, setPasword] = useState("");
   const { token } = useParams();
 
-  const PostData = async () => {
-    const result = await authService.getNewPasswod(password, token);
-    if (result.error) {
-      M.toast({ html: result.error, classes: "#c62828 red darken-3" });
-    } else {
-      M.toast({ html: result.message, classes: "#43a047 green darken-1" });
-      history.push("/signin");
-    }
+  const PostData = () => {
+    authService
+      .getNewPasswod(password, token)
+      .then((message) => {
+        M.toast({ html: message, classes: "#43a047 green darken-1" });
+        history.push("/signin");
+      })
+      .catch((err) =>
+        M.toast({ html: err.message, classes: "#c62828 red darken-3" })
+      );
   };
 
   return (

@@ -1,27 +1,31 @@
 import jwt from "jsonwebtoken";
 
 export default class AuthService {
-  async signup({ name, password, email, pictureUrl }) {
+  async signup({ name, password, email, picture }) {
+    let result, message;
     try {
-      let result = await fetch("/signup", {
+      result = await fetch("/signup", {
         method: "post",
         headers: this._requestHeaders(),
         body: JSON.stringify({
           name,
           password,
           email,
-          picture: pictureUrl,
+          picture,
         }),
       });
-      return result.json();
+      message = await result.json();
     } catch (err) {
-      console.log(err);
+      throw new Error("Connection lost. Try again later...");
     }
+    if (message.error) throw new Error(message.error);
+    return message;
   }
 
   async signin({ email, password }) {
+    let result, user;
     try {
-      let result = await fetch("/signin", {
+      result = await fetch("/signin", {
         method: "post",
         headers: this._requestHeaders(),
         body: JSON.stringify({
@@ -29,30 +33,36 @@ export default class AuthService {
           password,
         }),
       });
-      return result.json();
+      user = await result.json();
     } catch (err) {
-      console.log(err);
+      throw new Error("Connection lost. Try again later...");
     }
+    if (user.error) throw new Error(user.error);
+    return user;
   }
 
   async resetPasswod(email) {
+    let result, message;
     try {
-      const result = await fetch("/reset-password", {
+      result = await fetch("/reset-password", {
         method: "post",
         headers: this._requestHeaders(),
         body: JSON.stringify({
           email,
         }),
       });
-      return result.json();
+      message = await result.json();
     } catch (err) {
-      console.log(err);
+      throw new Error("Connection lost. Try again later...");
     }
+    if (message.error) throw new Error(message.error);
+    return message;
   }
 
   async getNewPasswod(password, token) {
+    let result, message;
     try {
-      const result = await fetch("/new-password", {
+      result = await fetch("/new-password", {
         method: "post",
         headers: this._requestHeaders(),
         body: JSON.stringify({
@@ -60,10 +70,12 @@ export default class AuthService {
           token,
         }),
       });
-      return result.json();
+      message = await result.json();
     } catch (err) {
-      console.log(err);
+      throw new Error("Connection lost. Try again later...");
     }
+    if (message.error) throw new Error(message.error);
+    return message;
   }
 
   saveLocalUser(data) {
