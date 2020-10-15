@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import M from "materialize-css";
+import { showError, showSuccess } from "../utils/toaster";
 
 import AuthService from "../services/Auth.service";
 
@@ -18,18 +18,16 @@ const ResetPassword = () => {
         email
       )
     ) {
-      M.toast({ html: "invalid email", classes: "#c62828 red darken-3" });
+      showError("invalid email");
       return;
     }
     authService
       .resetPasswod(email)
       .then((message) => {
-        M.toast({ html: message, classes: "#43a047 green darken-1" });
+        showSuccess(message);
         history.push("/signin");
       })
-      .catch((err) =>
-        M.toast({ html: err.message, classes: "#c62828 red darken-3" })
-      );
+      .catch((err) => showError(err.message));
   };
 
   return (

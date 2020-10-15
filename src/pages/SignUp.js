@@ -6,7 +6,7 @@ import UploadService from "../services/Upload.service";
 
 import UploadPicture from "../components/UploadPicture";
 
-import M from "materialize-css";
+import { showError, showSuccess } from "../utils/toaster";
 import { AuthCard } from "../styles/AuthCard";
 
 const uploadService = new UploadService();
@@ -32,7 +32,7 @@ const SignUp = () => {
           setUploading(false);
         })
         .catch((err) => {
-          M.toast({ html: err.message, classes: "#c62828 red darken-3" });
+          showError(err.message);
           setPictureUrl("");
           setUploading(false);
         });
@@ -42,10 +42,7 @@ const SignUp = () => {
 
   const validFields = () => {
     if (name.length < 1) {
-      M.toast({
-        html: "Please enter your name",
-        classes: "#c62828 red darken-3",
-      });
+      showError("Please enter your name");
       return false;
     }
     if (
@@ -53,10 +50,7 @@ const SignUp = () => {
         email
       )
     ) {
-      M.toast({
-        html: "Invalid email address",
-        classes: "#c62828 red darken-3",
-      });
+      showError("Invalid email address");
       return false;
     }
     if (
@@ -64,21 +58,15 @@ const SignUp = () => {
         password
       )
     ) {
-      M.toast({
-        html: `Your password needs to:<br>
+      showError(`Your password needs to:<br>
         - include both lower and upper case characters<br>
         - include at least one number<br>
         - include at least one symbol<br>
-        - be at least 8 characters long`,
-        classes: "#c62828 red darken-3",
-      });
+        - be at least 8 characters long`);
       return false;
     }
     if (!picture) {
-      M.toast({
-        html: "Please add a profile picture",
-        classes: "#c62828 red darken-3",
-      });
+      showError("Please add a profile picture");
       return false;
     }
     return true;
@@ -93,10 +81,10 @@ const SignUp = () => {
         email,
         picture: pictureUrl,
       });
-      M.toast({ html: result.message, classes: "#43a047 green darken-1" });
+      showSuccess(result.message);
       history.push("/signin");
     } catch (err) {
-      M.toast({ html: err.message, classes: "#c62828 red darken-3" });
+      showError(err.message);
     }
   };
 

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import M from "materialize-css";
+import { showError, showSuccess } from "../utils/toaster";
 
 import AuthService from "../services/Auth.service";
 
@@ -17,12 +17,10 @@ const NewPassword = () => {
     authService
       .getNewPasswod(password, token)
       .then((message) => {
-        M.toast({ html: message, classes: "#43a047 green darken-1" });
+        showSuccess(message);
         history.push("/signin");
       })
-      .catch((err) =>
-        M.toast({ html: err.message, classes: "#c62828 red darken-3" })
-      );
+      .catch((err) => showError(err.message));
   };
 
   return (

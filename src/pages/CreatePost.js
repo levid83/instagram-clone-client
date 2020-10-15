@@ -11,7 +11,7 @@ import UploadPicture from "../components/UploadPicture";
 import styled from "styled-components";
 import { device } from "../styles/devices";
 
-import M from "materialize-css";
+import { showError, showSuccess } from "../utils/toaster";
 
 const CreatePostCard = styled(Card)`
   @media ${device.small} {
@@ -51,7 +51,7 @@ const CreatePost = () => {
           setUploading(false);
         })
         .catch((err) => {
-          M.toast({ html: err.message, classes: "#c62828 red darken-3" });
+          showError(err.message);
           setPictureUrl("");
           setPicture("");
           setUploading(false);
@@ -61,24 +61,15 @@ const CreatePost = () => {
 
   const validFields = () => {
     if (!title.length) {
-      M.toast({
-        html: "Please enter a title",
-        classes: "#c62828 red darken-3",
-      });
+      showError("Please enter a title");
       return false;
     }
     if (!body.length) {
-      M.toast({
-        html: "Please enter your post content",
-        classes: "#c62828 red darken-3",
-      });
+      showError("Please enter your post content");
       return false;
     }
     if (!picture) {
-      M.toast({
-        html: "Please upload your post picture",
-        classes: "#c62828 red darken-3",
-      });
+      showError("Please upload your post picture");
       return false;
     }
     return true;
@@ -93,14 +84,11 @@ const CreatePost = () => {
         pictureUrl,
       })
       .then((result) => {
-        M.toast({
-          html: "Your post has been successfully created",
-          classes: "#43a047 green darken-1",
-        });
+        showSuccess("Your post has been successfully created");
         history.push("/");
       })
       .catch((err) => {
-        M.toast({ html: err.message, classes: "#c62828 red darken-3" });
+        showError(err.message);
       });
   };
 

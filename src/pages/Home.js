@@ -4,7 +4,7 @@ import Post from "../components/Post";
 import PostService from "../services/Post.service";
 import Spinner from "../styles/Spinner";
 
-import M from "materialize-css";
+import { showError } from "../utils/toaster";
 
 const postService = new PostService();
 
@@ -16,10 +16,7 @@ const Home = () => {
       .getAllPosts()
       .then((result) => setPosts(result.posts))
       .catch((err) => {
-        M.toast({
-          html: "Cannot load posts. Please try again later.",
-          classes: "#c62828 red darken-3",
-        });
+        showError("Cannot load posts. Please try again later.");
         setPosts([]);
       });
   }, []);

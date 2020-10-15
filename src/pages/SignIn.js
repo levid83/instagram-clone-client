@@ -5,7 +5,7 @@ import { Link, useHistory } from "react-router-dom";
 import AuthService from "../services/Auth.service";
 import { UserAction } from "../redux/userReducer";
 
-import M from "materialize-css";
+import { showError, showSuccess } from "../utils/toaster";
 import { AuthCard } from "../styles/AuthCard";
 
 const SignIn = () => {
@@ -22,10 +22,7 @@ const SignIn = () => {
         email
       )
     ) {
-      M.toast({
-        html: "Invalid email address",
-        classes: "#c62828 red darken-3",
-      });
+      showError("Invalid email address");
       return;
     }
     const authService = new AuthService();
@@ -37,15 +34,10 @@ const SignIn = () => {
           type: UserAction.SET_USER,
           payload: authService.getLocalUser(),
         });
-        M.toast({
-          html: "You have successfully signed in.",
-          classes: "#43a047 green darken-1",
-        });
+        showSuccess("You have successfully signed in.");
         history.push("/");
       })
-      .catch((err) =>
-        M.toast({ html: err.message, classes: "#c62828 red darken-3" })
-      );
+      .catch((err) => showError(err.message));
   };
   return (
     <AuthCard className="card">

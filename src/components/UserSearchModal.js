@@ -1,6 +1,8 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { showError } from "../utils/toaster";
+
 import M from "materialize-css";
 
 import UserService from "../services/User.service";
@@ -24,12 +26,7 @@ const UserSearchModal = () => {
     userService
       .searchUser(query)
       .then((users) => users && setUsers(users))
-      .catch((err) =>
-        M.toast({
-          html: err.message,
-          classes: "#c62828 red darken-3",
-        })
-      );
+      .catch((err) => showError(err.message));
   };
 
   return (

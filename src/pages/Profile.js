@@ -13,7 +13,7 @@ import { Card } from "../styles/Card";
 import ProfilePicture from "../styles/ProfilePicture";
 import Spinner from "../styles/Spinner";
 
-import M from "materialize-css";
+import { showError } from "../utils/toaster";
 
 const postService = new PostService();
 const userService = new UserService();
@@ -31,9 +31,7 @@ const Profile = () => {
     postService
       .getMyPosts()
       .then((result) => setPosts(result.posts))
-      .catch((err) =>
-        M.toast({ html: err.message, classes: "#c62828 red darken-3" })
-      );
+      .catch((err) => showError(err.message));
   }, []);
 
   useEffect(() => {
@@ -46,7 +44,7 @@ const Profile = () => {
           setUploading(false);
         })
         .catch((err) => {
-          M.toast({ html: err.message, classes: "#c62828 red darken-3" });
+          showError(err.message);
           setUploading(false);
         });
     }
@@ -62,7 +60,7 @@ const Profile = () => {
       );
       dispatch({ type: "UPDATE_PICTURE", payload: result.picture });
     } catch (err) {
-      M.toast({ html: err.message, classes: "#c62828 red darken-3" });
+      showError(err.message);
     }
   };
 

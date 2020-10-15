@@ -12,7 +12,7 @@ import { Card } from "../styles/Card";
 import ProfilePicture from "../styles/ProfilePicture";
 import Spinner from "../styles/Spinner";
 
-import M from "materialize-css";
+import { showError } from "../utils/toaster";
 
 const userService = new UserService();
 
@@ -26,9 +26,7 @@ const Profile = () => {
     userService
       .getUser(userId)
       .then((result) => setProfile(result))
-      .catch((err) =>
-        M.toast({ html: err.message, classes: "#c62828 red darken-3" })
-      );
+      .catch((err) => showError(err.message));
   }, [userId]);
 
   const toggleFollowUser = () => {
@@ -55,7 +53,7 @@ const Profile = () => {
         saveLocalUser(newUser);
       })
       .catch((err) => {
-        M.toast({ html: err.message, classes: "#c62828 red darken-3" });
+        showError(err.message);
       });
   };
   const unfollowUser = (userId) => {
@@ -74,7 +72,7 @@ const Profile = () => {
         saveLocalUser(newUser);
       })
       .catch((err) => {
-        M.toast({ html: err.message, classes: "#c62828 red darken-3" });
+        showError(err.message);
       });
   };
 

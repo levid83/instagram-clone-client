@@ -9,7 +9,7 @@ import LikeIcon from "../styles/LikeIcon";
 import CreateComment from "./CreateComment";
 import PostComments from "./PostComments";
 
-import M from "materialize-css";
+import { showError } from "../utils/toaster";
 
 const postService = new PostService();
 
@@ -27,24 +27,14 @@ const Post = (props) => {
     postService
       .toggleLike(id, isLiked())
       .then((post) => setPost(post))
-      .catch((err) =>
-        M.toast({
-          html: err.message,
-          classes: "#c62828 red darken-3",
-        })
-      );
+      .catch((err) => showError(err.message));
   };
 
   const comment = (text, postId) => {
     postService
       .addPostComment(text, postId)
       .then((post) => setPost(post))
-      .catch((err) =>
-        M.toast({
-          html: err.message,
-          classes: "#c62828 red darken-3",
-        })
-      );
+      .catch((err) => showError(err.message));
   };
 
   return (

@@ -6,7 +6,7 @@ import PostService from "../services/Post.service";
 
 import Spinner from "../styles/Spinner";
 
-import M from "materialize-css";
+import { showError } from "../utils/toaster";
 
 const postService = new PostService();
 
@@ -18,9 +18,7 @@ const SubscribedUserPosts = () => {
       .then((result) => {
         setData(result.posts);
       })
-      .catch((err) =>
-        M.toast({ html: err.message, classes: "#c62828 red darken-3" })
-      );
+      .catch((err) => showError(err.message));
   }, []);
 
   const deletePost = (postId) => {
@@ -29,9 +27,7 @@ const SubscribedUserPosts = () => {
       .then((result) =>
         setData(data.filter((item) => item._id !== result.postId))
       )
-      .catch((err) =>
-        M.toast({ html: err.message, classes: "#c62828 red darken-3" })
-      );
+      .catch((err) => showError(err.message));
   };
 
   return (
