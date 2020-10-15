@@ -1,5 +1,8 @@
 import React from "react";
 import ImageUploader from "react-images-upload";
+
+import Spinner from "../styles/Spinner";
+
 import styled from "styled-components";
 
 const StyledImageUploader = styled(ImageUploader)`
@@ -19,20 +22,24 @@ const StyledImageUploader = styled(ImageUploader)`
 `;
 
 const UploadPicture = (
-  { onSetPicture, withPreview } = { withPreview: false }
+  { onSetPicture, withPreview, uploading } = { withPreview: false }
 ) => {
   return (
-    <StyledImageUploader
-      withIcon={false}
-      buttonText="Choose image"
-      onChange={(e) => onSetPicture(e[0])}
-      withLabel={false}
-      imgExtension={[".jpg", ".gif", ".png", ".gif"]}
-      maxFileSize={5242880}
-      withPreview={withPreview}
-      singleImage={true}
-    />
+    <>
+      <StyledImageUploader
+        withIcon={false}
+        buttonText="Choose picture"
+        onChange={(e) => onSetPicture(e[0])}
+        withLabel={false}
+        imgExtension={[".jpg", ".gif", ".png", ".gif"]}
+        maxFileSize={5242880}
+        withPreview={withPreview}
+        singleImage={true}
+      />
+
+      {uploading && <Spinner />}
+    </>
   );
 };
 
-export default UploadPicture;
+export default React.memo(UploadPicture);
