@@ -1,49 +1,50 @@
 export default class PostService {
   async getAllPosts() {
+    let result, posts;
     try {
-      const result = await fetch("/all-posts", {
+      result = await fetch("/all-posts", {
         headers: this._requestHeaders(),
       });
-      const posts = await result.json();
-      if (posts.error) throw new Error(posts.error);
-      return posts;
+      posts = await result.json();
     } catch (err) {
-      console.log(err);
+      throw new Error("Connection lost. Try again later...");
     }
-    return { posts: [] };
+    if (posts.error) throw new Error(posts.error);
+    return posts;
   }
 
   async getMyPosts() {
+    let result, posts;
     try {
-      const result = await fetch("/my-posts", {
+      result = await fetch("/my-posts", {
         headers: this._requestHeaders(),
       });
-      const posts = await result.json();
-      if (posts.error) throw new Error(posts.error);
-      return posts;
+      posts = await result.json();
     } catch (err) {
-      console.log(err);
+      throw new Error("Connection lost. Try again later...");
     }
-    return { posts: [] };
+    if (posts.error) throw new Error(posts.error);
+    return posts;
   }
 
   async getSubposts() {
+    let result, posts;
     try {
-      const result = await fetch("/subposts", {
+      result = await fetch("/subposts", {
         headers: this._requestHeaders(),
       });
-      const posts = await result.json();
-      if (posts.error) throw new Error(posts.error);
-      return posts;
+      posts = await result.json();
     } catch (err) {
-      console.log(err);
+      throw new Error("Connection lost. Try again later...");
     }
-    return { posts: [] };
+    if (posts.error) throw new Error(posts.error);
+    return posts;
   }
 
   async createPost({ title, body, pictureUrl }) {
+    let result, post;
     try {
-      let result = await fetch("/create-post", {
+      result = await fetch("/create-post", {
         method: "post",
         headers: this._requestHeaders(),
         body: JSON.stringify({
@@ -52,60 +53,70 @@ export default class PostService {
           picture: pictureUrl,
         }),
       });
-      const post = await result.json();
-      if (post.error) throw new Error(post.error);
-      return post;
+      post = await result.json();
     } catch (err) {
-      console.log(err);
+      throw new Error("Connection lost. Try again later...");
     }
-    return { posts: null };
+    if (post.error) throw new Error(post.error);
+    return post;
   }
 
   async deletePost(postId) {
+    let result, message;
     try {
-      const result = await fetch(`/delete-post/${postId}`, {
+      result = await fetch(`/delete-post/${postId}`, {
         method: "delete",
         headers: this._requestHeaders(),
       });
-      return result.json();
+      message = await result.json();
     } catch (err) {
-      console.log(err);
+      throw new Error("Connection lost. Try again later...");
     }
+    if (message.error) throw new Error(message.error);
+    return message;
   }
 
-  async likePost(postId) {
+  async toggleLike(postId, liked) {
+    let result, post;
     try {
-      const result = await fetch("/like-post", {
+      result = await fetch(liked ? "/unlike-post" : "/like-post", {
         method: "put",
         headers: this._requestHeaders(),
         body: JSON.stringify({
           postId: postId,
         }),
       });
-      return result.json();
+      post = await result.json();
     } catch (err) {
-      console.log(err);
+      throw new Error("Connection lost. Try again later...");
     }
+    if (post.error) throw new Error(post.error);
+    return post;
   }
 
   async unlikePost(postId) {
+    let result, post;
+
     try {
-      const result = await fetch("/unlike-post", {
+      result = await fetch("/unlike-post", {
         method: "put",
         headers: this._requestHeaders(),
         body: JSON.stringify({
           postId: postId,
         }),
       });
-      return result.json();
+      post = await result.json();
     } catch (err) {
-      console.log(err);
+      throw new Error("Connection lost. Try again later...");
     }
+    if (post.error) throw new Error(post.error);
+    return post;
   }
 
   async addPostComment(text, postId) {
+    let result, post;
     try {
-      const result = await fetch("/add-post-comment", {
+      result = await fetch("/add-post-comment", {
         method: "put",
         headers: this._requestHeaders(),
         body: JSON.stringify({
@@ -113,10 +124,12 @@ export default class PostService {
           text,
         }),
       });
-      return result.json();
+      post = await result.json();
     } catch (err) {
-      console.log(err);
+      throw new Error("Connection lost. Try again later...");
     }
+    if (post.error) throw new Error(post.error);
+    return post;
   }
 
   _requestHeaders() {

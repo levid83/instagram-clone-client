@@ -20,7 +20,7 @@ export default class UploadService {
       });
       return result.json();
     } catch (err) {
-      return err;
+      throw new Error("Cannot upload the picture");
     }
   }
 }

@@ -1,29 +1,40 @@
 export default class UserService {
   async updatePicture(url) {
-    const result = await fetch("/update-picture", {
-      method: "put",
-      headers: this._requestHeaders(),
-      body: JSON.stringify({
-        picture: url,
-      }),
-    });
-    return result.json();
+    let result, user;
+    try {
+      result = await fetch("/update-picture", {
+        method: "put",
+        headers: this._requestHeaders(),
+        body: JSON.stringify({
+          picture: url,
+        }),
+      });
+      user = await result.json();
+    } catch (err) {
+      throw new Error("Connection lost. Try again later...");
+    }
+    if (user.error) throw new Error(user.error);
+    return user;
   }
 
   async getUser(userId) {
+    let result, user;
     try {
-      const result = await fetch(`/user/${userId}`, {
+      result = await fetch(`/user/${userId}`, {
         headers: this._requestHeaders(),
       });
-      return result.json();
+      user = await result.json();
     } catch (err) {
-      console.log(err);
+      throw new Error("Connection lost. Try again later...");
     }
+    if (user.error) throw new Error(user.error);
+    return user;
   }
 
   async searchUser(query) {
+    let result, profiles;
     try {
-      const result = await fetch("/search-users", {
+      result = await fetch("/search-users", {
         method: "post",
         headers: {
           "Content-Type": "application/json",
@@ -32,41 +43,48 @@ export default class UserService {
           query,
         }),
       });
-      const { users } = await result.json();
-      return users;
+      profiles = await result.json();
     } catch (err) {
-      console.log(err);
+      throw new Error("Connection lost. Try again later...");
     }
+    if (profiles.error) throw new Error(profiles.error);
+    return profiles;
   }
 
   async followUser(userId) {
+    let result, user;
     try {
-      const result = await fetch("/follow-user", {
+      result = await fetch("/follow-user", {
         method: "put",
         headers: this._requestHeaders(),
         body: JSON.stringify({
           followId: userId,
         }),
       });
-      return result.json();
+      user = await result.json();
     } catch (err) {
-      console.log(err);
+      throw new Error("Connection lost. Try again later...");
     }
+    if (user.error) throw new Error(user.error);
+    return user;
   }
 
   async unfollowUser(userId) {
+    let result, user;
     try {
-      const result = await fetch("/unfollow-user", {
+      result = await fetch("/unfollow-user", {
         method: "put",
         headers: this._requestHeaders(),
         body: JSON.stringify({
           unfollowId: userId,
         }),
       });
-      return result.json();
+      user = await result.json();
     } catch (err) {
-      console.log(err);
+      throw new Error("Connection lost. Try again later...");
     }
+    if (user.error) throw new Error(user.error);
+    return user;
   }
 
   _requestHeaders() {
