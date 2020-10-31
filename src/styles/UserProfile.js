@@ -29,9 +29,3 @@ export const UserProfile = styled(Card)`
     }
   }
 `;
-
-export const Gallery = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-`;

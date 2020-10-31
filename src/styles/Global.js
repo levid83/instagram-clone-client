@@ -8,18 +8,40 @@ export const Global = createGlobalStyle`
     box-sizing: border-box;
   }
   :root {
-    font-size:14px;
+    font-size:12px;
 
     @media ${device.small} {
-      font-size: 16px;
+      font-size: 12px;
     }
     @media ${device.medium}{
-      font-size: 18px;
+      font-size: 14px;
     }
 
     @media ${device.large} {
-      font-size: 18px;
+      font-size: 16px;
     }
+  }
+
+  /* width */
+  ::-webkit-scrollbar {
+    width: 3px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px #f5f3f0; 
+    border-radius: 10px;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #dbdad9; 
+    border-radius: 10px;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #bab9b8; 
   }
 
   a {

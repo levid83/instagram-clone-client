@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Post from "../components/Post";
-
+import { Home as StyledHome } from "../styles/Home";
 import PostService from "../services/Post.service";
 import Spinner from "../styles/Spinner";
 
@@ -27,13 +27,13 @@ const Home = () => {
     });
   };
   return (
-    <>
+    <StyledHome>
       {posts &&
         posts.map((post) => (
           <Post post={post} key={post._id} onDelete={deletePost} />
         ))}
       {!posts && <Spinner />}
-    </>
+    </StyledHome>
   );
 };
 export default React.memo(Home);

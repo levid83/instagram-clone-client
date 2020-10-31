@@ -1,13 +1,14 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { PostComment } from "../styles/PostComment";
 
 const PostComments = (props) => {
   const user = useSelector((state) => state);
   const { comments } = props;
   return comments.map((comment) => {
     return (
-      <div className="comment" key={comment._id}>
+      <PostComment key={comment._id}>
         <div>
           <Link
             to={
@@ -20,7 +21,7 @@ const PostComments = (props) => {
           </Link>
         </div>
         <div>{comment.text}</div>
-      </div>
+      </PostComment>
     );
   });
 };

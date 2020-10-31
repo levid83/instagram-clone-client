@@ -10,6 +10,13 @@ const Navigation = styled.ul`
   & .search {
     color: black;
   }
+  & .nav-wrapper {
+    padding-left: 1em;
+  }
+
+  & .sidenav-trigger {
+    margin-left: 0;
+  }
 `;
 
 const SideNav = styled.ul`

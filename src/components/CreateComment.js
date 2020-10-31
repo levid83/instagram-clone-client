@@ -1,56 +1,54 @@
 import React, { useRef } from "react";
 import { device } from "../styles/devices";
+import { border } from "../styles/variables";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
-  & .create-comment {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    justify-content: center;
-    align-items: space-around;
-    @media ${device.small} {
-      flex-direction: row;
-    }
+  width: 100%;
+  margin-bottom: 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: space-around;
+  @media ${device.small} {
+    flex-direction: row;
+  }
+  & input[type="text"] {
+    border-bottom: ${border};
+  }
 
-    & .text {
-      width: 80%;
-      @media ${device.medium} {
-        width: 60%;
-      }
+  & .text {
+    align-self: center;
+    width: 80%;
+    @media ${device.medium} {
+      width: 60%;
     }
+  }
 
-    & button {
-      self-align: middle;
-      margin-left: 10px;
-    }
+  & button {
+    width: 100px;
+    align-self: center;
   }
 `;
 
 const CreateComment = (props) => {
   const textInput = useRef();
   const { postId, onComment } = props;
+
+  const comment = () => {
+    onComment(textInput.current.value, postId);
+    textInput.current.value = "";
+  };
   return (
     <Wrapper>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          e.target[0].value !== "" && onComment(e.target[0].value, postId);
-          textInput.current.value = "";
-        }}
-      >
-        <div className="input-field create-comment">
-          <textarea
-            className="materialize-textarea text"
-            placeholder="Add a comment..."
-            ref={textInput}
-          ></textarea>
-          <button className="btn " type="submit" name="post">
-            Send
-          </button>
-        </div>
-      </form>
+      <textarea
+        className="materialize-textarea text"
+        placeholder="Add a comment..."
+        ref={textInput}
+      ></textarea>
+      <button className="btn send" type="submit" name="post" onClick={comment}>
+        Send
+      </button>
     </Wrapper>
   );
 };

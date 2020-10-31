@@ -8,8 +8,8 @@ import UploadService from "../services/Upload.service";
 import PostList from "../components/PostList";
 import UploadPicture from "../components/UploadPicture";
 
-import { UserProfile, Gallery } from "../styles/UserProfile";
-import { Card } from "../styles/Card";
+import { UserProfile } from "../styles/UserProfile";
+import { Gallery } from "../styles/Gallery";
 import ProfilePicture from "../styles/ProfilePicture";
 import Spinner from "../styles/Spinner";
 
@@ -92,7 +92,7 @@ const Profile = () => {
           <UploadPicture onSetPicture={setPicture} uploading={uploading} />
         </div>
       </UserProfile>
-      <Card className="card">{renderPosts(posts)}</Card>
+      {renderPosts(posts)}
     </>
   );
 };

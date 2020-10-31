@@ -31,10 +31,11 @@ const Post = (props) => {
   };
 
   const comment = (text, postId) => {
-    postService
-      .addPostComment(text, postId)
-      .then((post) => setPost(post))
-      .catch((err) => showError(err.message));
+    if (text.length > 0)
+      postService
+        .addPostComment(text, postId)
+        .then((post) => setPost(post))
+        .catch((err) => showError(err.message));
   };
 
   return (
@@ -74,8 +75,8 @@ const Post = (props) => {
         </Link>
         : {post.body}
         <PostComments comments={post.comments} />
-        <CreateComment onComment={comment} postId={post._id} />
       </PostContent>
+      <CreateComment onComment={comment} postId={post._id} />
     </PostCard>
   );
 };

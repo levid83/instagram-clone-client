@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import Post from "../components/Post";
+import { Gallery } from "../styles/Gallery";
 
 import PostService from "../services/Post.service";
 
@@ -31,13 +32,13 @@ const SubscribedUserPosts = () => {
   };
 
   return (
-    <div className="home">
+    <Gallery>
       {data.length > 0 &&
         data.map((post) => (
           <Post post={post} key={post._id} onDelete={deletePost} />
         ))}
       {!data && <Spinner />}
-    </div>
+    </Gallery>
   );
 };
 export default React.memo(SubscribedUserPosts);

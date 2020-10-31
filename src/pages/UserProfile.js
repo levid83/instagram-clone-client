@@ -7,8 +7,8 @@ import UserService from "../services/User.service";
 
 import PostList from "../components/PostList";
 
-import { UserProfile, Gallery } from "../styles/UserProfile";
-import { Card } from "../styles/Card";
+import { UserProfile } from "../styles/UserProfile";
+import { Gallery } from "../styles/Gallery";
 import ProfilePicture from "../styles/ProfilePicture";
 import Spinner from "../styles/Spinner";
 
@@ -111,11 +111,9 @@ const Profile = () => {
               </div>
             </div>
           </UserProfile>
-          <Card className="card">
-            <Gallery>
-              <PostList posts={userProfile.posts} />
-            </Gallery>
-          </Card>
+          <Gallery>
+            <PostList posts={userProfile.posts} />
+          </Gallery>
         </>
       ) : (
         <Spinner />
