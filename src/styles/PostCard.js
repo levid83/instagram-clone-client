@@ -71,6 +71,7 @@ export const PictureContainer = styled.div`
 `;
 
 export const PostContent = styled.div`
+  height: 100%;
   padding: 1em;
   overflow-y: scroll;
   box-sizing: content-box; /* So the width will be 100% + 17px */
