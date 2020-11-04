@@ -4,7 +4,7 @@ export default class AuthService {
   async signup({ name, password, email, picture }) {
     let result, message;
     try {
-      result = await fetch("/signup", {
+      result = await fetch(`${process.env.REACT_APP_BASE_URL}/signup`, {
         method: "post",
         headers: this._requestHeaders(),
         body: JSON.stringify({
@@ -25,7 +25,7 @@ export default class AuthService {
   async signin({ email, password }) {
     let result, user;
     try {
-      result = await fetch("/signin", {
+      result = await fetch(`${process.env.REACT_APP_BASE_URL}/signin`, {
         method: "post",
         headers: this._requestHeaders(),
         body: JSON.stringify({
@@ -44,7 +44,7 @@ export default class AuthService {
   async resetPasswod(email) {
     let result, message;
     try {
-      result = await fetch("/reset-password", {
+      result = await fetch(`${process.env.REACT_APP_BASE_URL}/reset-password`, {
         method: "post",
         headers: this._requestHeaders(),
         body: JSON.stringify({
@@ -62,7 +62,7 @@ export default class AuthService {
   async getNewPasswod(password, token) {
     let result, message;
     try {
-      result = await fetch("/new-password", {
+      result = await fetch(`${process.env.REACT_APP_BASE_URL}/new-password`, {
         method: "post",
         headers: this._requestHeaders(),
         body: JSON.stringify({

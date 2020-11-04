@@ -27,6 +27,10 @@
 $ npm install
 ```
 
+Create a `.env` file in the root folder of this project (see [.env.example](https://github.com/levid83/instagram-clone-client/.env.example)). You need to specify:
+
+`REACT_APP_BASE_URL= <Backend API URL>`
+
 ## Running the app
 
 ```bash
